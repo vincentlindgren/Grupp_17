@@ -22,5 +22,7 @@ namespace Grupp_17
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+
+
     }
 }
