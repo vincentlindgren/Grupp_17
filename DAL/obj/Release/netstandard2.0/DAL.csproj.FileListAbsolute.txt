@@ -1,0 +1,8 @@
+C:\Users\Vincent\source\repos\DAL\bin\Release\netstandard2.0\DAL.deps.json
+C:\Users\Vincent\source\repos\DAL\bin\Release\netstandard2.0\DAL.dll
+C:\Users\Vincent\source\repos\DAL\bin\Release\netstandard2.0\DAL.pdb
+C:\Users\Vincent\source\repos\DAL\obj\Release\netstandard2.0\DAL.AssemblyInfoInputs.cache
+C:\Users\Vincent\source\repos\DAL\obj\Release\netstandard2.0\DAL.AssemblyInfo.cs
+C:\Users\Vincent\source\repos\DAL\obj\Release\netstandard2.0\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Vincent\source\repos\DAL\obj\Release\netstandard2.0\DAL.dll
+C:\Users\Vincent\source\repos\DAL\obj\Release\netstandard2.0\DAL.pdb
