@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace Grupp_17
 { //Philip
     [Serializable]
-    public class TestaRSSXML
+    public class TestaRSSXML //Vincent Kommentar
     {
         public string Title { get; set; }
         public string Description { get; set; }
