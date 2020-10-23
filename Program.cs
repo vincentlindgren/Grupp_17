@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Grupp_17
 {
     static class Program
@@ -17,7 +18,8 @@ namespace Grupp_17
 
         static void Main()
         {
-            MyBinarySerializer.MainClass.testaRSS();
+            MyBinarySerializer.MainClass.TestaDALfranClass2();
+            //MyBinarySerializer.MainClass.TestaRSS();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

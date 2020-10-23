@@ -5,6 +5,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.ServiceModel.Syndication;
 using System.Xml;
 using System.Xml.Serialization;
+using DAL;
+
 
 namespace Grupp_17
 { 
@@ -30,7 +32,11 @@ namespace Grupp_17
 
        public class MainClass
         {
-            public static void testaRSS()
+            public static void TestaDALfranClass2()
+            {
+                DAL1.testaDAL();
+            }
+            public static void TestaRSS()
             {
                 XmlReader reader = XmlReader.Create("https://feed.pod.space/filipandfredrik");
                 SyndicationFeed feed = SyndicationFeed.Load(reader);
@@ -45,6 +51,7 @@ namespace Grupp_17
                     Console.WriteLine("-> " + item.Summary.Text);
                     Console.WriteLine();
                 }
+               
 
             }
 
