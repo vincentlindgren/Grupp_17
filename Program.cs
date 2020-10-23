@@ -18,7 +18,6 @@ namespace Grupp_17
 
         static void Main()
         {
-            MyBinarySerializer.MainClass.TestaDALfranClass2();
             //MyBinarySerializer.MainClass.TestaRSS();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
