@@ -32,28 +32,14 @@ namespace Grupp_17
 
        public class MainClass
         {
-            public static void TestaDALfranClass2()
-            {
-                DAL1.testaDAL();
-            }
-            public static void TestaRSS()
-            {
-                XmlReader reader = XmlReader.Create("https://feed.pod.space/filipandfredrik");
-                SyndicationFeed feed = SyndicationFeed.Load(reader);
+            //  public void genvag()
+            //{
+            //    Avsnitt.TestaRSS(inputURL);
 
-                Console.WriteLine("--- Title ---" + feed.Title.Text);
-                Console.WriteLine("--- Description ---" + feed.Description.Text);
-                Console.WriteLine();
+            //}
 
-                foreach (var item in feed.Items)
-                {
-                    Console.WriteLine(item.Title.Text);
-                    Console.WriteLine("-> " + item.Summary.Text);
-                    Console.WriteLine();
-                }
-               
 
-            }
+            
 
           
         }

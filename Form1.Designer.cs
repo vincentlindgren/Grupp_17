@@ -87,6 +87,7 @@
             this.btnSpara.TabIndex = 3;
             this.btnSpara.Text = "Spara";
             this.btnSpara.UseVisualStyleBackColor = true;
+            this.btnSpara.Click += new System.EventHandler(this.btnSpara_Click);
             // 
             // btnTaBort
             // 
@@ -103,6 +104,7 @@
             this.txtBoxURL.Name = "txtBoxURL";
             this.txtBoxURL.Size = new System.Drawing.Size(227, 20);
             this.txtBoxURL.TabIndex = 5;
+            this.txtBoxURL.TextChanged += new System.EventHandler(this.txtBoxURL_TextChanged);
             // 
             // textBox2
             // 
