@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 
 namespace Grupp_17
-{ //testtesttest
+{ //Philip
     [Serializable]
     public class TestaRSSXML
     {
