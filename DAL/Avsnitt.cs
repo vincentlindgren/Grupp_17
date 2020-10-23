@@ -28,6 +28,7 @@ namespace DAL
 
         public Avsnitt()
         {
+
         }
 
         // Podcast, avsnittsnamn, avsnittsbeskrivningbeskrivning, avsnittsnummer //Grunden för metoden för att hämta och läsa XML-filen från RSS-URL "https://feed.pod.space/filipandfredrik"
