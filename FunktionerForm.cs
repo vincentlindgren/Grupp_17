@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 using System.ServiceModel.Syndication;
 using System.Xml;
 using System.Xml.Serialization;
+using DAL;
+using BLL;
 
 namespace Grupp_17
 {
-    class TestaNu
+    class FunktionerForm
     {
-        
+        public static void TestaListView()
+        {
+            
+        }
     }
 }

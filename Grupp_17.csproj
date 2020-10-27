@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestaNu.cs" />
+    <Compile Include="FunktionerForm.cs" />
     <Compile Include="Temporary.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -93,6 +93,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="BLL\BLL.csproj">
+      <Project>{9651f3f8-fbce-4454-85a4-203c031138bb}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

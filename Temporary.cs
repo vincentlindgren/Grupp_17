@@ -32,11 +32,7 @@ namespace Grupp_17
 
        public class MainClass
         {
-            //  public void genvag()
-            //{
-            //    Avsnitt.TestaRSS(inputURL);
-
-            //}
+            
 
 
             
