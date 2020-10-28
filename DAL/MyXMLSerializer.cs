@@ -11,20 +11,21 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using static DAL.DAL1;
+using static DAL.Podcast;
 
 namespace DAL
 {
     [Serializable]
     public class MyXMLSerializer
     {
-
+        public Podcast myPodcastObj {get; set;}
         public MyXMLSerializer()
         {
-            
+            myPodcastObj = new Podcast();
         }
 
 
-        public static void Serialize(List<Avsnitt> avsnitt, string podcastNamn)
+        public void Serialize(List<Avsnitt> avsnitt, string podcastNamn) //Method overloading kriteriet <--
         {
             XmlSerializer xmlSerializer = new XmlSerializer(avsnitt.GetType());
             using (FileStream filSomSparas = new FileStream(podcastNamn + ".xml", FileMode.Create, FileAccess.Write))
@@ -34,27 +35,62 @@ namespace DAL
             }
         }
 
+        public void Serialize(List<Podcast> podcasts){  //Method overloading kriteriet <-- Wrappa listan i annat objekt. Annan klass som har lista av podcasts skickas in här
 
-        public static int DeserializeList(string podcastNamn)
+           ListsForXml listsForXml = new ListsForXml(); //Wrapper för podcastlista så att Det går att spara flera Podcasts i listan.
+           listsForXml.podcastLista = podcasts;
+
+           XmlSerializer xmlSerializer = new XmlSerializer(listsForXml.GetType());
+           using (FileStream filSomFyllsPa = File.Open("PodcastInfo.xml", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+           {
+              
+              xmlSerializer.Serialize(filSomFyllsPa, listsForXml);
+           }
+        }
+
+        public int DeserializeList(string podcastNamn) //implementera TRY CATCH för om den inte hittar filen
         {
-            List<Avsnitt> listOfstudentObjToBeReturned;
+
+            List<Avsnitt> listAvSparadPodcast;
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Avsnitt>));
             
             using (FileStream inFile = new FileStream(podcastNamn + ".xml", FileMode.Open, FileAccess.Read))
             {
-                listOfstudentObjToBeReturned = (List<Avsnitt>)xmlSerializer.Deserialize(inFile);
+                listAvSparadPodcast = (List<Avsnitt>)xmlSerializer.Deserialize(inFile);
 
                     int i = 0;
-                    foreach (var item in listOfstudentObjToBeReturned)
+                    foreach (var item in listAvSparadPodcast)
                     {
                         i++;
                     }
-
                     return i;
             }
-
         }
 
+        public List<Podcast> DeserializePodcastList() {
+            
+            ListsForXml listsForXml = new ListsForXml();
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ListsForXml));
+
+            try
+            {
+                using (FileStream inFile = new FileStream("PodcastInfo.xml", FileMode.Open, FileAccess.Read))
+                {
+                    listsForXml = (ListsForXml)xmlSerializer.Deserialize(inFile);
+                }
+            }
+            catch (InvalidOperationException exc) {
+                Console.WriteLine(exc);
+            }
+            catch (FileNotFoundException exc)
+            {
+                Console.WriteLine(exc);
+            }
+
+            return listsForXml.podcastLista;
+        
+        }
     }
 }
 

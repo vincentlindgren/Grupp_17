@@ -14,29 +14,30 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DAL
 {
-    public class Avsnitt
+    public class Avsnitt //Döp om klassen till mer beskrivande för funktionen
     {
         public string AvsnittsNummer { get; set; }
         public string AvsnittsNamn { get; set; }
 
-        //public static int AntalAvsnitt { get; set; } = 0;
+        public MyXMLSerializer mySerializerObj { get; set; }
+
 
         public Avsnitt(string ett, string tva)
         {
             AvsnittsNummer = ett;
             AvsnittsNamn = tva;
-
+            mySerializerObj = new MyXMLSerializer();
         }
 
         public Avsnitt()
         {
-
+            mySerializerObj = new MyXMLSerializer();
         }
 
-        // Podcast, avsnittsnamn, avsnittsbeskrivningbeskrivning, avsnittsnummer //Grunden för metoden för att hämta och läsa XML-filen från RSS-URL "https://feed.pod.space/filipandfredrik"
-        public static void TestaRSS(string inputURL, string podcastNamn)
+        // Podcast, avsnittsnamn, avsnittsbeskrivningbeskrivning, avsnittsnummer //Grunden för metoden för att hämta och läsa XML-filen från RSS-URL
+        public void TestaRSS(string inputURL, string podcastNamn) //Döp om metodnamn till annat än TESTARSS LOL
         {
-            XmlReader reader = XmlReader.Create(inputURL); //Används ej atm. Feed.Title.Text kan användas till att sätta namn om txtbox lämnas tom.
+            XmlReader reader = XmlReader.Create(inputURL); 
             SyndicationFeed feed = SyndicationFeed.Load(reader);
 
             Console.WriteLine("--- Title ---" + feed.Title.Text);
@@ -46,57 +47,35 @@ namespace DAL
            
             List<Avsnitt> avsnitt = new List<Avsnitt>();
             
-            avsnitt.Add(new Avsnitt(inputURL, ""));
-
-            foreach (var item in feed.Items)
-            {
-                avsnitt.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
-                
-
-                Console.WriteLine(item.Title.Text);
-                Console.WriteLine("-> " + item.Summary.Text);
-                Console.WriteLine();
-
-                //avsnittsNamn = feed.Title.Text;
-                //avsnittsListaInnan.Add(avsnittsNamn, avsnittsNummer);
-            }
+            avsnitt.Add(new Avsnitt(inputURL, podcastNamn)); //Tror inte denna rad används, tror vi skrev den för att få med URL-en i det sparade XML-dokumentet
             try
             {
-                MyXMLSerializer.Serialize(avsnitt, podcastNamn);
+                foreach (var item in feed.Items)
+            {
+                avsnitt.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
+
+                    Console.WriteLine(item.Title.Text);
+                    Console.WriteLine("-> " + item.Summary.Text);
+                    Console.WriteLine();
+            }
+            
+                mySerializerObj.Serialize(avsnitt, podcastNamn); //Skickar listan av avsnitt från URL till annan klass som skapar ny XML fil & sparar xml-filen lokalt
             }
             catch (Exception e) {
                 Console.WriteLine(e);
             }
-        
         }
 
+        public string hamtaPodcastNamn(string inputURL) { //fixa ta bort statisk
+            //Läser RSS-feeden och returnerar podcastens titel som sträng.
+            //Används för att sätta default - namn om användaren inte själv namnsätter podcasten.
 
-        public static string hamtaPodcastNamn(string inputURL) {
-
-            XmlReader reader = XmlReader.Create(inputURL); //Används ej atm. Feed.Title.Text kan användas till att sätta namn om txtbox lämnas tom.
+            XmlReader reader = XmlReader.Create(inputURL); 
             SyndicationFeed feed = SyndicationFeed.Load(reader);
-
-            Console.WriteLine("--- Title ---" + feed.Title.Text);
-            Console.WriteLine("--- Description ---" + feed.Description.Text);
-            Console.WriteLine();
 
             string namnAttReturnera = feed.Title.Text;
             return namnAttReturnera;
         }
-
-        public static int RaknaAvsnitt(string podcastNamn)
-        {
-            int antalAvsnitt = 0;
-            XmlReader reader = XmlReader.Create(podcastNamn); 
-            SyndicationFeed feed = SyndicationFeed.Load(reader);
-
-
-            foreach (var item in feed.Items) {
-                antalAvsnitt++;
-            }
-            return antalAvsnitt;
-        }
-
     }
 }
     
