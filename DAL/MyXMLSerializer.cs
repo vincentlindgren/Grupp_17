@@ -28,7 +28,7 @@ namespace DAL
         public void Serialize(List<Avsnitt> avsnitt, string podcastNamn) //Method overloading kriteriet <--
         {
             XmlSerializer xmlSerializer = new XmlSerializer(avsnitt.GetType());
-            using (FileStream filSomSparas = new FileStream(podcastNamn + ".xml", FileMode.Create, FileAccess.Write))
+            using (FileStream filSomSparas = new FileStream(podcastNamn + ".xml", FileMode.Create, FileAccess.Write)) // Denna rad kan användas i catch-Blocket för att skapa ny fil om PodcastInfo.xml inte redan existerar.
             {
 
                 xmlSerializer.Serialize(filSomSparas, avsnitt);
@@ -46,6 +46,19 @@ namespace DAL
               
               xmlSerializer.Serialize(filSomFyllsPa, listsForXml);
            }
+        }
+
+        public void Serialize(ListsForXml podxmlList)
+        {  //Method overloading kriteriet <-- Wrappa listan i annat objekt. Annan klass som har lista av podcasts skickas in här
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ListsForXml));
+            //ListsForXml listsForXml = new ListsForXml();
+            ListsForXml listsForXml = podxmlList;
+
+            using (FileStream filSomFyllsPa = File.Open("PodcastInfo.xml", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+            {
+
+                xmlSerializer.Serialize(filSomFyllsPa, listsForXml);
+            }
         }
 
         public int DeserializeList(string podcastNamn) //implementera TRY CATCH för om den inte hittar filen
@@ -86,10 +99,21 @@ namespace DAL
             catch (FileNotFoundException exc)
             {
                 Console.WriteLine(exc);
+                SkapaPodcastInfoXMLFilOmEjExist(listsForXml);
             }
 
             return listsForXml.podcastLista;
         
+        }
+
+        public void SkapaPodcastInfoXMLFilOmEjExist(ListsForXml listsForXml)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ListsForXml));
+            using (FileStream filSomSparas = new FileStream("PodcastInfo.xml", FileMode.Create, FileAccess.Write))
+            {
+                xmlSerializer.Serialize(filSomSparas, listsForXml);
+            }
+
         }
     }
 }

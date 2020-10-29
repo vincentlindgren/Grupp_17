@@ -15,8 +15,7 @@ namespace DAL
 
         public int AntalAvsnitt { get; set; }
 
-        public int MyProperty { get; set; }
-
+       
         public MyXMLSerializer xMLSerializer { get; set; }
 
    
@@ -34,20 +33,26 @@ namespace DAL
         }
 
 
-        public void SkapaListForEnskildPodcast(string podcastNamn, string podcastURL, string podcastKategori, int antalAvsnitt) {
+        //public void SkapaListForEnskildPodcast(string podcastNamn, string podcastURL, string podcastKategori, int antalAvsnitt) {
 
-            List<Podcast> podcastLista = new List<Podcast>();
 
-            podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
-            try
-            {
-                xMLSerializer.Serialize(podcastLista); //Skickar listan av avsnitt från URL till annan klass som skapar ny XML fil & sparar xml-filen lokalt
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
+        //    List<Podcast> podcastLista = new List<Podcast>();
+        //    podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+            
+        //    ListsForXml listsForXml = new ListsForXml();
+        //    listsForXml.podcastLista = podcastLista;
+            
+
+        //    try
+        //    {
+        //        //podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+        //        xMLSerializer.Serialize(listsForXml); //Skickar listan av avsnitt från URL till annan klass som skapar ny XML fil & sparar xml-filen lokalt
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //    }
+        //}
 
     //    public void Play() { } //om objektet är en "Podcast" kommer denna metod att anropas
     //                                   //Denna i sin egen klass ska spela upp en podcast
