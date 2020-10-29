@@ -81,6 +81,7 @@ namespace Grupp_17
             
             PodcastListView.Items.AddRange(new ListViewItem[] { item1});
             //podcastObj.SkapaListForEnskildPodcast(podcastNamn, inputURL, "Seriös podcast", antalAvsnitt);
+            bll1Objekt.SkickaPodInfoTillPodInfoSkapandet(podcastNamn, inputURL, "Seriös podcast", antalAvsnitt);
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) //Metoden funkar!! hämtar namn från vald podcast och konverterar till string
@@ -115,17 +116,21 @@ namespace Grupp_17
             try
             {
                 List<Podcast> podcastsSomLaddas = bll1Objekt.LaddaInPodcasts();
-            
-            foreach (var pod in podcastsSomLaddas)
+
+                foreach (var pod in podcastsSomLaddas)
+                {
+                    ListViewItem podcastItem = new ListViewItem(new[] { pod.PodcastsNamn, pod.AntalAvsnitt.ToString(), pod.PodcastsUrl, pod.PodcastsKategori });
+                    PodcastListView.Items.Add(podcastItem);
+                }
+            }
+            catch (Exception ex)
             {
-                ListViewItem podcastItem = new ListViewItem(new[] { pod.PodcastsNamn, pod.AntalAvsnitt.ToString(), pod.PodcastsUrl, pod.PodcastsKategori });
-                PodcastListView.Items.Add(podcastItem);
+                Console.WriteLine(ex);
             }
-            }
-            catch (FileNotFoundException exFileNotFound)
-            {
-                Console.WriteLine(exFileNotFound);
-            }
+            //catch (FileNotFoundException exFileNotFound)
+            //{
+            //    Console.WriteLine(exFileNotFound);
+            //}
         }
     }
 }

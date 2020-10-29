@@ -26,7 +26,7 @@ namespace DAL
         {
             AvsnittsNummer = ett;
             AvsnittsNamn = tva;
-            mySerializerObj = new MyXMLSerializer();
+            //mySerializerObj = new MyXMLSerializer();
         }
 
         public Avsnitt()
@@ -44,7 +44,7 @@ namespace DAL
             Console.WriteLine("--- Description ---" + feed.Description.Text);
             Console.WriteLine();
 
-           
+
             List<Avsnitt> avsnitt = new List<Avsnitt>();
             
             avsnitt.Add(new Avsnitt(inputURL, podcastNamn)); //Tror inte denna rad används, tror vi skrev den för att få med URL-en i det sparade XML-dokumentet

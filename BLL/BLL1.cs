@@ -17,6 +17,10 @@ namespace BLL
 
         }
 
+        public BLL1(MyXMLSerializer xmlObj) {
+            myXmlObj = new MyXMLSerializer();
+        }
+
         public void BLL1TestaRSS(string inputURL, string podcastNamn) {
             avsnittObj.TestaRSS(inputURL, podcastNamn);
            
@@ -33,6 +37,26 @@ namespace BLL
 
            List<Podcast> podListIBll = myXmlObj.DeserializePodcastList();
             return podListIBll;
+        }
+
+
+        public void SkickaPodInfoTillPodInfoSkapandet(string podcastNamn, string podcastURL, string podcastKategori, int antalAvsnitt) {
+            List<Podcast> podLista = new List<Podcast>();
+            podLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+
+            ListsForXml listsForXml = new ListsForXml();
+
+            listsForXml.podcastLista = podLista;
+
+            try
+            {
+                //podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+                myXmlObj.Serialize(listsForXml);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BLL
 {
-    class Class1
+    class PhilipBLL
     {
     }
 }

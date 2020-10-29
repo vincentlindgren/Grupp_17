@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.ServiceModel.Syndication;
+using System.Xml;
 
 namespace DAL
 {
@@ -15,70 +17,71 @@ namespace DAL
 
         public int AntalAvsnitt { get; set; }
 
-       
         public MyXMLSerializer xMLSerializer { get; set; }
 
    
         public Podcast(string namn, string url, string kategori, int antalAvsnitt)
         {
+            
             PodcastsNamn = namn;
             PodcastsUrl = url;
             PodcastsKategori = kategori;
             AntalAvsnitt = antalAvsnitt;
-            xMLSerializer = new MyXMLSerializer();
+            //xMLSerializer = new MyXMLSerializer();
         }
 
         public Podcast() {
-            
+            xMLSerializer = new MyXMLSerializer();
+
         }
 
 
-        //public void SkapaListForEnskildPodcast(string podcastNamn, string podcastURL, string podcastKategori, int antalAvsnitt) {
+        public void SkapaListForEnskildPodcast(string podcastNamn, string podcastURL, string podcastKategori, int antalAvsnitt)
+        {
+            List<Podcast> podLista = new List<Podcast>();
+            podLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
 
-
-        //    List<Podcast> podcastLista = new List<Podcast>();
-        //    podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+            ListsForXml listsForXml = new ListsForXml();
             
-        //    ListsForXml listsForXml = new ListsForXml();
-        //    listsForXml.podcastLista = podcastLista;
-            
+            listsForXml.podcastLista = podLista;
 
-        //    try
-        //    {
-        //        //podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
-        //        xMLSerializer.Serialize(listsForXml); //Skickar listan av avsnitt från URL till annan klass som skapar ny XML fil & sparar xml-filen lokalt
+
+            try
+            {
+                //podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+                xMLSerializer.Serialize(listsForXml); 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        //    public void Play() { } //om objektet är en "Podcast" kommer denna metod att anropas
+        //                                   //Denna i sin egen klass ska spela upp en podcast
+
         //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
+
+        //public interface IPodcast { //Interface skapas i en egen fil helst, gör detta här också
+
+        //     void Play();
         //}
 
-    //    public void Play() { } //om objektet är en "Podcast" kommer denna metod att anropas
-    //                                   //Denna i sin egen klass ska spela upp en podcast
- 
-    //    }
-
-    //public interface IPodcast { //Interface skapas i en egen fil helst, gör detta här också
-
-    //     void Play();
-    //}
 
 
+        //public class VisualPodcast : IPodcast {
 
-    //public class VisualPodcast : IPodcast {
+        //    public void Play() { //om objektet är en "VisualPodcast" kommer denna metod att anropas
+        //                                  //Detta används för att man ska kunna trycka på play oavsett vilken 
 
-    //    public void Play() { //om objektet är en "VisualPodcast" kommer denna metod att anropas
-    //                                  //Detta används för att man ska kunna trycka på play oavsett vilken 
+        //        List<IPodcast> pList = new List<IPodcast>();
+        //        pList.Add(new Podcast());
+        //        pList.Add(new VisualPodcast());
 
-    //        List<IPodcast> pList = new List<IPodcast>();
-    //        pList.Add(new Podcast());
-    //        pList.Add(new VisualPodcast());
+        //        foreach (var item in pList) {
+        //            item.Play();
+        //        }
 
-    //        foreach (var item in pList) {
-    //            item.Play();
-    //        }
-
-    //    }
+        //    }
     }
 }
