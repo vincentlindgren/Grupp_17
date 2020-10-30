@@ -4,14 +4,16 @@ using System.Text;
 using DAL;
 using System.ServiceModel.Syndication;
 using System.Xml;
+using DAL.RepoMapp;
 
 namespace BLL
 {
     public class AvsnittKontroller
     {
+        PodcastRep podRep = new PodcastRep();
 
-        public AvsnittKontroller() { 
-            
+        public AvsnittKontroller() {
+            podRep = new PodcastRep();
         }
 
 
@@ -45,7 +47,7 @@ namespace BLL
                 throw; //throw används för att säga till medtoden att ej returna List<Avsnitt> om den catchar ett exception.
             }
         }
-
+        
         public int RaknaAntalAvsnitt(string url) //implementera TRY CATCH för om den inte hittar filen
         {
             XmlReader reader = XmlReader.Create(url);

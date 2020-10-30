@@ -18,13 +18,14 @@ using DAL;
 using BLL;
 using DAL.RepoMapp;
 
+
 //Kalla på metoder i logiklagret från denna klass. 
 
-namespace Grupp_17 
+namespace Grupp_17
 {
     public partial class Form1 : Form
     {
-        
+
         //Avsnitt avsnitt = new Avsnitt();
         public BLL1 bll1Objekt { get; set; } //Döp om BLL1 klassen till något beskrivande istället
         public Podcast podcastObj { get; set; }
@@ -37,10 +38,11 @@ namespace Grupp_17
 
         public Form1()
         {
-            
+
             InitializeComponent();
             VisaPodcastsIListView();
-           
+            fyllFrekvens();
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -62,30 +64,31 @@ namespace Grupp_17
         {
             string inputURL = txtBoxURL.Text;
             string podcastNamn;
-            
+
 
             if (string.IsNullOrEmpty(txtBoxPodcastNamn.Text)) //Hämtar podcastens orginalnamn om "namnTxtBox" lämnas tom
             {
                 string podcastOmEmpty = podcastKontroller.HamtaPodcastNamn(inputURL);
                 podcastNamn = podcastOmEmpty;
             }
-            else{  //Döper om podcastens namn om "namnTxtBox" innehåller en sträng
+            else
+            {  //Döper om podcastens namn om "namnTxtBox" innehåller en sträng
                 podcastNamn = txtBoxPodcastNamn.Text;
             }
-            
-            string frekvens = "40";
-            string kategori = "humor";
+
+            string frekvens = CmbUpdateFrekvens.SelectedItem.ToString();
+            string kategori = cmbKategori.SelectedItem.ToString();
             int antalAvsnitt = avsnittKontroller.RaknaAntalAvsnitt(inputURL);
 
-            podcastKontroller.SkapaListForEnskildPodcast(podcastNamn, inputURL, kategori, frekvens);
+            podcastKontroller.SkapaListForEnskildPodcast(podcastNamn, frekvens , kategori, inputURL);
 
 
             ListViewItem item1 = new ListViewItem(podcastNamn); //var tidigare (podcastNamn, antalAvsnitt)- återgå om ej funkar med endast podcastNamn
             item1.SubItems.Add(antalAvsnitt.ToString());
             item1.SubItems.Add(frekvens);
             item1.SubItems.Add(kategori);
-            
-            PodcastListView.Items.AddRange(new ListViewItem[] { item1});
+
+            PodcastListView.Items.AddRange(new ListViewItem[] { item1 });
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) //Metoden funkar!! hämtar namn från vald podcast och konverterar till string
@@ -123,7 +126,7 @@ namespace Grupp_17
 
                 foreach (var pod in podcastsSomLaddas)
                 {
-                    ListViewItem podcastItem = new ListViewItem(new[] { pod.PodcastsNamn, pod.AntalAvsnitt.ToString(), pod.PodcastsUrl, pod.PodcastsKategori });
+                    ListViewItem podcastItem = new ListViewItem(new[] { pod.PodcastsNamn, pod.AntalAvsnitt.ToString(), pod.Frekvens, pod.PodcastsKategori });
                     PodcastListView.Items.Add(podcastItem);
                 }
             }
@@ -135,6 +138,61 @@ namespace Grupp_17
             //{
             //    Console.WriteLine(exFileNotFound);
             //}
+        }
+
+        private void btnNyKategori_Click(object sender, EventArgs e)
+        {
+            {
+                if (!String.IsNullOrEmpty(textBox2.Text))
+                {
+                    string kategoriNamn = textBox2.Text;
+
+                    listBoxKategorier.Items.Add(kategoriNamn);
+                    cmbKategori.Items.Add(kategoriNamn);
+                    textBox2.Text = "";
+
+                }
+            }
+
+        }
+
+        private void btnSparaKategori_Click(object sender, EventArgs e)
+        {
+            {
+                Boolean selected = true;
+                var text = textBox2.Text;
+                if (listBoxKategorier.SelectedItems.Count > 0)
+                {
+                    if (string.IsNullOrEmpty(text))
+                    {
+                        MessageBox.Show("Textfältet är tomt!");
+                    }
+
+                    if (selected)
+                    {
+                        int selectedIndex = listBoxKategorier.SelectedIndex;
+                        listBoxKategorier.Items.RemoveAt(selectedIndex);
+                        listBoxKategorier.Items.Insert(selectedIndex, textBox2.Text);
+                        listBoxKategorier.ResetText();
+                        cmbKategori.Items.RemoveAt(selectedIndex);
+                        cmbKategori.Items.Insert(selectedIndex, textBox2.Text);
+                        cmbKategori.ResetText();
+                    }
+                    textBox2.Clear();
+                    MessageBox.Show("Du har nu ändrat kategorins namn!", "Kategorin", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    MessageBox.Show("du måste välja en kategori");
+                }
+
+            }
+        }
+        public void fyllFrekvens()
+        {
+            CmbUpdateFrekvens.Items.Add("10");
+            CmbUpdateFrekvens.Items.Add("30");
+            CmbUpdateFrekvens.Items.Add("60");
         }
     }
 }

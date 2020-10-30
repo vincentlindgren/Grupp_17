@@ -10,15 +10,18 @@ namespace DAL
 
     {
         public string PodcastsNamn { get; set; }
-
-        public string PodcastsUrl { get; set; }
-
-        public string PodcastsKategori { get; set; }
-
         public int AntalAvsnitt { get; set; }
 
         public string Frekvens { get; set; }
 
+        public string PodcastsKategori { get; set; }
+        public string PodcastsUrl { get; set; }
+
+        
+
+       
+
+     
         public List<Avsnitt> avsnittsLista { get; set; }
 
         //public MyXMLSerializer xMLSerializer { get; set; }
