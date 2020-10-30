@@ -64,6 +64,18 @@ namespace DAL.RepoMapp
             return returneraPodcastOmHittad;
         }
 
+        public List<Podcast> SokPodcastEfterKategori(string sokKategori) { //ska kallas på när man väljer kategori från cmb samt när man delete'ar alla podcasts i en kategori
+            List<Podcast> sokPodcastsForKategoriList = new List<Podcast>();
+            List<Podcast> podLista = GetAll();
+
+            foreach (var item in podLista) {
+                if (item.PodcastsKategori.Equals(sokKategori)) {
+                    sokPodcastsForKategoriList.Add(item);
+                } 
+            }
+            return sokPodcastsForKategoriList;
+        }
+
         public string HamtaNamn(int index) {
             return podLista[index].PodcastsNamn;
         }
