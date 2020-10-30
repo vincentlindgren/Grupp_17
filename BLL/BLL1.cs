@@ -35,14 +35,14 @@ namespace BLL
 
         public List<Podcast> LaddaInPodcasts() {
 
-           List<Podcast> podListIBll = myXmlObj.DeserializePodcastList();
+            List<Podcast> podListIBll = myXmlObj.DeserializePodcastList();
             return podListIBll;
         }
 
 
         public void SkickaPodInfoTillPodInfoSkapandet(string podcastNamn, string podcastURL, string podcastKategori, int antalAvsnitt) {
             List<Podcast> podLista = new List<Podcast>();
-            podLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+           // podLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
 
             ListsForXml listsForXml = new ListsForXml();
 

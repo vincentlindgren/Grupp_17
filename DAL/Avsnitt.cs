@@ -35,38 +35,38 @@ namespace DAL
         }
 
         // Podcast, avsnittsnamn, avsnittsbeskrivningbeskrivning, avsnittsnummer //Grunden för metoden för att hämta och läsa XML-filen från RSS-URL
-        public void TestaRSS(string inputURL, string podcastNamn) //Döp om metodnamn till annat än TESTARSS LOL
+        public List<Avsnitt> TestaRSS(string inputURL, string podcastNamn) //Döp om metodnamn till annat än TESTARSS LOL
         {
-            XmlReader reader = XmlReader.Create(inputURL); 
-            SyndicationFeed feed = SyndicationFeed.Load(reader);
-
-            Console.WriteLine("--- Title ---" + feed.Title.Text);
-            Console.WriteLine("--- Description ---" + feed.Description.Text);
-            Console.WriteLine();
-
-
-            List<Avsnitt> avsnitt = new List<Avsnitt>();
-            
-            avsnitt.Add(new Avsnitt(inputURL, podcastNamn)); //Tror inte denna rad används, tror vi skrev den för att få med URL-en i det sparade XML-dokumentet
             try
             {
+                XmlReader reader = XmlReader.Create(inputURL); 
+                SyndicationFeed feed = SyndicationFeed.Load(reader);
+
+                Console.WriteLine("--- Title ---" + feed.Title.Text);
+                Console.WriteLine("--- Description ---" + feed.Description.Text);
+                Console.WriteLine();
+
+                List<Avsnitt> avsnittLista = new List<Avsnitt>();
+
                 foreach (var item in feed.Items)
-            {
-                avsnitt.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
+                {
+
+                    avsnittLista.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
 
                     Console.WriteLine(item.Title.Text);
                     Console.WriteLine("-> " + item.Summary.Text);
                     Console.WriteLine();
-            }
-            
-                mySerializerObj.Serialize(avsnitt, podcastNamn); //Skickar listan av avsnitt från URL till annan klass som skapar ny XML fil & sparar xml-filen lokalt
+                }
+                return avsnittLista; //Se till att när denna metod kallas på att den returnerade List<Avsnitt> faktiskt skickas till Serialize-metoden
             }
             catch (Exception e) {
                 Console.WriteLine(e);
+                throw;
             }
         }
 
-        public string hamtaPodcastNamn(string inputURL) { //fixa ta bort statisk
+
+        public string hamtaPodcastNamn(string inputURL) { 
             //Läser RSS-feeden och returnerar podcastens titel som sträng.
             //Används för att sätta default - namn om användaren inte själv namnsätter podcasten.
 

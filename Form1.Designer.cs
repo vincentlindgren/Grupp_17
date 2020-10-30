@@ -290,7 +290,7 @@
             this.PodcastListView.HideSelection = false;
             this.PodcastListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
-            this.PodcastListView.Location = new System.Drawing.Point(12, 12);
+            this.PodcastListView.Location = new System.Drawing.Point(16, 12);
             this.PodcastListView.MultiSelect = false;
             this.PodcastListView.Name = "PodcastListView";
             this.PodcastListView.Size = new System.Drawing.Size(506, 241);
@@ -302,13 +302,13 @@
             // PodcastHeader
             // 
             this.PodcastHeader.Text = "Podcast";
-            this.PodcastHeader.Width = 229;
+            this.PodcastHeader.Width = 227;
             // 
             // AntalAvsnittHeader
             // 
             this.AntalAvsnittHeader.Text = "Antal Avsnitt";
             this.AntalAvsnittHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.AntalAvsnittHeader.Width = 84;
+            this.AntalAvsnittHeader.Width = 86;
             // 
             // IntervallHeader
             // 

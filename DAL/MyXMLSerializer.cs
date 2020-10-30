@@ -15,17 +15,61 @@ using static DAL.Podcast;
 
 namespace DAL
 {
-    [Serializable]
+    //[Serializable]
     public class MyXMLSerializer
     {
-        //public Podcast myPodcastObj {get; set;}
+        
 
         public MyXMLSerializer()
         {
-            //myPodcastObj = new Podcast();
+            
         }
 
+        //public void Serialize(List<Podcast> podLista) {                           <----------- Nästkommande 4 metoder ligger i DataSerializer (Ny fredag 30 okt)
+        //    XmlSerializer xmlSerializer = new XmlSerializer(podLista.GetType());
+        //    using (FileStream filSomSparas = new FileStream("PodcastInfo.xml", FileMode.Create, FileAccess.Write)) 
+        //    {
+        //        xmlSerializer.Serialize(filSomSparas, podLista);
+        //    }
+        //}
 
+        //public List<Podcast> Deserialize() {
+        //    List<Podcast> returnPodcastLista;
+        //    XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Podcast>));
+
+        //    using (FileStream sparadFil = new FileStream("PodcastInfo.xml", FileMode.Open, FileAccess.Read)) {
+        //        returnPodcastLista = (List<Podcast>)xmlSerializer.Deserialize(sparadFil);
+        //    }
+        //    return returnPodcastLista;
+        //}
+
+
+        //public void Serialize(List<PodKategori> listAvKategorier) 
+        //{  
+        //    XmlSerializer xmlSerializer = new XmlSerializer(listAvKategorier.GetType());
+        //    using (FileStream filSomSparas = new FileStream("PodcastKategorier.xml", FileMode.Create, FileAccess.Write))
+        //    {
+        //        xmlSerializer.Serialize(filSomSparas, listAvKategorier);
+        //    }
+        //}
+
+        //public List<PodKategori> DeserializeKategoriLista() 
+        //{ 
+        //    List<PodKategori> returnKategoriLista;
+        //    XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<PodKategori>));
+
+        //    using (FileStream sparadFil = new FileStream("PodcastInfo.xml", FileMode.Open, FileAccess.Read))
+        //    {
+        //        returnKategoriLista = (List<PodKategori>)xmlSerializer.Deserialize(sparadFil);
+        //    }
+        //    return returnKategoriLista;
+        //}
+
+
+
+
+
+        //Under denna rad gammal kod som ej fungerar helt 100
         public void Serialize(List<Avsnitt> avsnitt, string podcastNamn) //Method overloading kriteriet <--
         {
             XmlSerializer xmlSerializer = new XmlSerializer(avsnitt.GetType());
@@ -37,7 +81,8 @@ namespace DAL
         }
 
         public void Serialize(List<Podcast> podcasts)
-        {  //Method overloading kriteriet <-- Wrappa listan i annat objekt. Annan klass som har lista av podcasts skickas in här
+        {
+            //Denna metod är gamla, se om behöver ta något från denna!!!!!       <<<< -------
 
             ListsForXml listsForXml = new ListsForXml(); //Wrapper för podcastlista så att Det går att spara flera Podcasts i listan.
             listsForXml.podcastLista = podcasts;
@@ -46,7 +91,7 @@ namespace DAL
 
             try
             {
-                using (FileStream filSomFyllsPa = File.Open("PodcastInfo.xml", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using (FileStream filSomFyllsPa = File.Open("PodcastInfo", FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
                 {
 
                     xmlSerializer.Serialize(filSomFyllsPa, listsForXml);
@@ -66,7 +111,7 @@ namespace DAL
         public void Serialize(ListsForXml podxmlList)
         {  //Method overloading kriteriet <-- Wrappa listan i annat objekt. Annan klass som har lista av podcasts skickas in här
            
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ListsForXml));
+            XmlSerializer xmlSerializer = new XmlSerializer(podxmlList.GetType());
             
 
             try
@@ -77,16 +122,24 @@ namespace DAL
                 }
             }
             catch(FileNotFoundException exFileNotFound) {
-                using (FileStream filSomFyllsPa = new FileStream("PodcastInfo.xml", FileMode.Create, FileAccess.Write))
+                using (FileStream filSomSkapas = new FileStream("PodcastInfo.xml", FileMode.Create, FileAccess.Write))
                 {
                     Console.WriteLine(exFileNotFound);
                     Console.WriteLine(podxmlList.ToString());
-                    xmlSerializer.Serialize(filSomFyllsPa, podxmlList);
+                    xmlSerializer.Serialize(filSomSkapas, podxmlList);
                 }
             }
         }
 
-        public int DeserializeList(string podcastNamn) //implementera TRY CATCH för om den inte hittar filen
+        //catch (FileNotFoundException)
+        //    {
+        //        string directory = AppDomain.CurrentDomain.BaseDirectory;
+        //System.IO.Path.Combine(directory, _filename);
+        //        List<string> emptyList = new List<string>();
+        //        return emptyList;
+        //    }
+
+    public int DeserializeList(string podcastNamn) //implementera TRY CATCH för om den inte hittar filen
         {
 
             List<Avsnitt> listAvSparadPodcast;
@@ -130,7 +183,7 @@ namespace DAL
             catch (FileNotFoundException exc)
             {
                 Console.WriteLine(exc);
-                Serialize(listsForXml);
+                Serialize(listsForXml.podcastLista);
             }
 
             return listsForXml.podcastLista;

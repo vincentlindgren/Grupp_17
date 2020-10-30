@@ -16,6 +16,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using DAL;
 using BLL;
+using DAL.RepoMapp;
 
 //Kalla på metoder i logiklagret från denna klass. 
 
@@ -23,16 +24,20 @@ namespace Grupp_17
 {
     public partial class Form1 : Form
     {
+        
         //Avsnitt avsnitt = new Avsnitt();
         public BLL1 bll1Objekt { get; set; } //Döp om BLL1 klassen till något beskrivande istället
         public Podcast podcastObj { get; set; }
-        public Avsnitt avsnittObj { get; set; }
+        AvsnittKontroller avsnittKontroller = new AvsnittKontroller();
+
+        PodcastKontroller podcastKontroller = new PodcastKontroller();
+        PodcastRep podcastRep = new PodcastRep();
+
+        KategoriKontroller kategoriKontroller = new KategoriKontroller();
 
         public Form1()
         {
-            bll1Objekt = new BLL1();
-            podcastObj = new Podcast();
-            avsnittObj = new Avsnitt();
+            
             InitializeComponent();
             VisaPodcastsIListView();
            
@@ -61,27 +66,26 @@ namespace Grupp_17
 
             if (string.IsNullOrEmpty(txtBoxPodcastNamn.Text)) //Hämtar podcastens orginalnamn om "namnTxtBox" lämnas tom
             {
-                string podcastOmEmpty = avsnittObj.hamtaPodcastNamn(inputURL);
+                string podcastOmEmpty = podcastKontroller.HamtaPodcastNamn(inputURL);
                 podcastNamn = podcastOmEmpty;
             }
             else{  //Döper om podcastens namn om "namnTxtBox" innehåller en sträng
                 podcastNamn = txtBoxPodcastNamn.Text;
             }
-
-            bll1Objekt.BLL1TestaRSS(inputURL, podcastNamn);
-
-            int antalAvsnitt = bll1Objekt.BLL1RaknaAvsnitt(podcastNamn);
-            string intervall = "40";
+            
+            string frekvens = "40";
             string kategori = "humor";
+            int antalAvsnitt = avsnittKontroller.RaknaAntalAvsnitt(inputURL);
 
-            ListViewItem item1 = new ListViewItem(podcastNamn, antalAvsnitt);
+            podcastKontroller.SkapaListForEnskildPodcast(podcastNamn, inputURL, kategori, frekvens);
+
+
+            ListViewItem item1 = new ListViewItem(podcastNamn); //var tidigare (podcastNamn, antalAvsnitt)- återgå om ej funkar med endast podcastNamn
             item1.SubItems.Add(antalAvsnitt.ToString());
-            item1.SubItems.Add(intervall);
+            item1.SubItems.Add(frekvens);
             item1.SubItems.Add(kategori);
             
             PodcastListView.Items.AddRange(new ListViewItem[] { item1});
-            //podcastObj.SkapaListForEnskildPodcast(podcastNamn, inputURL, "Seriös podcast", antalAvsnitt);
-            bll1Objekt.SkickaPodInfoTillPodInfoSkapandet(podcastNamn, inputURL, "Seriös podcast", antalAvsnitt);
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) //Metoden funkar!! hämtar namn från vald podcast och konverterar till string
@@ -97,8 +101,8 @@ namespace Grupp_17
                 string text = PodcastListView.Items[valdIndex].Text;
                 try
                 {
-                    lblAvsnittPresentation.Text = bll1Objekt.BLL1RaknaAvsnitt(text).ToString(); //Skickar iväg vald podcast till metod som räknar antal avsnitt
-                    Console.WriteLine(text);
+                    //lblAvsnittPresentation.Text = avsnittKontroller.RaknaAntalAvsnitt(text).ToString(); //Skickar iväg vald podcast till metod som räknar antal avsnitt
+                    //Console.WriteLine(text);
                 }
                 catch (ArgumentOutOfRangeException skrivException)
                 {
@@ -115,7 +119,7 @@ namespace Grupp_17
         {
             try
             {
-                List<Podcast> podcastsSomLaddas = bll1Objekt.LaddaInPodcasts();
+                List<Podcast> podcastsSomLaddas = podcastRep.GetAll();
 
                 foreach (var pod in podcastsSomLaddas)
                 {
