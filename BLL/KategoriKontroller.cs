@@ -8,5 +8,9 @@ namespace BLL
     {
 
 
+
+        public KategoriKontroller() { 
+            
+        }
     }
 }
