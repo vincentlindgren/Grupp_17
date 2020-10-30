@@ -24,8 +24,8 @@ namespace DAL
 
         public Avsnitt(string ett, string tva)
         {
-            AvsnittsNummer = ett;
-            AvsnittsNamn = tva;
+            AvsnittsNummer = ett; //Detta är egentligen "Avsnitts TITEL / RUBRIK"
+            AvsnittsNamn = tva; //Detta är egentligen "Avsnitts BESKRIVNING"
             //mySerializerObj = new MyXMLSerializer();
         }
 
@@ -65,6 +65,7 @@ namespace DAL
             }
         }
 
+        //public List<Avsnitt> HamtaAvsnittForV
 
         public string hamtaPodcastNamn(string inputURL) { 
             //Läser RSS-feeden och returnerar podcastens titel som sträng.

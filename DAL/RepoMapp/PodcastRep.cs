@@ -64,6 +64,8 @@ namespace DAL.RepoMapp
             return returneraPodcastOmHittad;
         }
 
+
+
         public List<Podcast> SokPodcastEfterKategori(string sokKategori) { //ska kallas på när man väljer kategori från cmb samt när man delete'ar alla podcasts i en kategori
             List<Podcast> sokPodcastsForKategoriList = new List<Podcast>();
             List<Podcast> podLista = GetAll();

@@ -35,6 +35,7 @@ namespace Grupp_17
         PodcastRep podcastRep = new PodcastRep();
 
         KategoriKontroller kategoriKontroller = new KategoriKontroller();
+        PodKategori podKategori = new PodKategori();
 
         public Form1()
         {
@@ -42,6 +43,7 @@ namespace Grupp_17
             InitializeComponent();
             VisaPodcastsIListView();
             fyllFrekvens();
+            fyllKategorier();
 
         }
 
@@ -80,7 +82,7 @@ namespace Grupp_17
             string kategori = cmbKategori.SelectedItem.ToString();
             int antalAvsnitt = avsnittKontroller.RaknaAntalAvsnitt(inputURL);
 
-            podcastKontroller.SkapaListForEnskildPodcast(podcastNamn, frekvens , kategori, inputURL);
+            podcastKontroller.SkapaListForEnskildPodcast(podcastNamn, inputURL, kategori, frekvens);
 
 
             ListViewItem item1 = new ListViewItem(podcastNamn); //var tidigare (podcastNamn, antalAvsnitt)- återgå om ej funkar med endast podcastNamn
@@ -89,6 +91,8 @@ namespace Grupp_17
             item1.SubItems.Add(kategori);
 
             PodcastListView.Items.AddRange(new ListViewItem[] { item1 });
+            
+            
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) //Metoden funkar!! hämtar namn från vald podcast och konverterar till string
@@ -102,15 +106,23 @@ namespace Grupp_17
             if (valdIndex >= 0)
             {
                 string text = PodcastListView.Items[valdIndex].Text;
+                List<Avsnitt> avsnittLista = avsnittKontroller.HamtaAvsnittForPodcast(text); //igen DAL-connection här, kan lösas med models. Viktigt?
                 try
                 {
-                    //lblAvsnittPresentation.Text = avsnittKontroller.RaknaAntalAvsnitt(text).ToString(); //Skickar iväg vald podcast till metod som räknar antal avsnitt
-                    //Console.WriteLine(text);
+                    listViewAvsnitt.Items.Clear();
+                    int avsnittsnummer = 0;
+                foreach (var item in avsnittLista) {
+                        avsnittsnummer++; //sätt avsnittnummer till avsnittskontroller.raknaAvsnitt() och kör avsnittsnummer --; istället / räkna ner
+                        ListViewItem avsnittItem = new ListViewItem(new[] { avsnittsnummer.ToString(), item.AvsnittsNummer }); ;
+                        listViewAvsnitt.Items.Add(avsnittItem);
+                    }
                 }
                 catch (ArgumentOutOfRangeException skrivException)
                 {
                     Console.WriteLine(skrivException);
                 }
+
+
             }
             //lblAvsnittPresentation.Text = BLL1.BLL1RaknaAvsnitt(podcastNamn).ToString();
             //string returneradPodNamn = Avsnitt.hamtaPodcastNamn(podcastNamn);
@@ -146,7 +158,7 @@ namespace Grupp_17
                 if (!String.IsNullOrEmpty(textBox2.Text))
                 {
                     string kategoriNamn = textBox2.Text;
-
+                    kategoriKontroller.SparaKategorier(kategoriNamn);
                     listBoxKategorier.Items.Add(kategoriNamn);
                     cmbKategori.Items.Add(kategoriNamn);
                     textBox2.Text = "";
@@ -188,11 +200,32 @@ namespace Grupp_17
 
             }
         }
+
+        public void fyllKategorier() {
+            List<PodKategori> listaSomReturneras = kategoriKontroller.LaddaInKategorier();
+
+            foreach (var pod in listaSomReturneras)
+            {
+                listBoxKategorier.Items.Add(pod.KategoriNamn);
+                cmbKategori.Items.Add(pod.KategoriNamn);
+            }
+        }
+
         public void fyllFrekvens()
         {
             CmbUpdateFrekvens.Items.Add("10");
             CmbUpdateFrekvens.Items.Add("30");
             CmbUpdateFrekvens.Items.Add("60");
+        }
+
+        private void listBoxAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listViewAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

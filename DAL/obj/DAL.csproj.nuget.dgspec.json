@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\phili\\source\\repos\\Grupp_17\\DAL\\DAL.csproj": {}
+    "C:\\Users\\Vincent\\source\\repos\\Grupp_17\\DAL\\DAL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\phili\\source\\repos\\Grupp_17\\DAL\\DAL.csproj": {
+    "C:\\Users\\Vincent\\source\\repos\\Grupp_17\\DAL\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\phili\\source\\repos\\Grupp_17\\DAL\\DAL.csproj",
+        "projectUniqueName": "C:\\Users\\Vincent\\source\\repos\\Grupp_17\\DAL\\DAL.csproj",
         "projectName": "DAL",
-        "projectPath": "C:\\Users\\phili\\source\\repos\\Grupp_17\\DAL\\DAL.csproj",
-        "packagesPath": "C:\\Users\\phili\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\phili\\source\\repos\\Grupp_17\\DAL\\obj\\",
+        "projectPath": "C:\\Users\\Vincent\\source\\repos\\Grupp_17\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\Vincent\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vincent\\source\\repos\\Grupp_17\\DAL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\phili\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Vincent\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -63,7 +67,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

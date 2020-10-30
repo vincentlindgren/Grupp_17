@@ -6,6 +6,7 @@ namespace DAL
 {
     public class PodKategori
     {
+
         public string KategoriNamn { get; set; }
 
 
@@ -18,9 +19,5 @@ namespace DAL
             
         }
          
-        private static readonly string[] forInlagdaKategorier = { //Kolla funktionaliteten <-------
-            @"Humor", @"Forskning", @"Filosofi", @"Politik", @"Dokumentärer"
-
-        };
     }
 }
