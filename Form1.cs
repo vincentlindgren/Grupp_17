@@ -45,6 +45,8 @@ namespace Grupp_17
             fyllFrekvens();
             fyllKategorier();
 
+
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
