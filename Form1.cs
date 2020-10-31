@@ -45,8 +45,6 @@ namespace Grupp_17
             fyllFrekvens();
             fyllKategorier();
 
-
-
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -203,7 +201,7 @@ namespace Grupp_17
             }
         }
 
-        public void fyllKategorier() {
+        public void fyllKategorier() { //implementera try catch if ifall det inte finns någon kategori.xml sparad
             List<PodKategori> listaSomReturneras = kategoriKontroller.LaddaInKategorier();
 
             foreach (var pod in listaSomReturneras)
