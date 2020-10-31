@@ -13,7 +13,7 @@ namespace DAL
                 
         }
 
-        public void Serialize(List<Podcast> podLista)
+        public void Serialize(List<Podcast> podLista) //METHOD OVERLOADING
         {
             XmlSerializer xmlSerializer = new XmlSerializer(podLista.GetType());
             using (FileStream filSomSparas = new FileStream("PodcastInfo.xml", FileMode.Create, FileAccess.Write))
@@ -35,7 +35,7 @@ namespace DAL
         }
 
 
-        public void Serialize(List<PodKategori> listAvKategorier)
+        public void Serialize(List<PodKategori> listAvKategorier) //METHOD OVERLOADING
         {
             XmlSerializer xmlSerializer = new XmlSerializer(listAvKategorier.GetType());
             using (FileStream filSomSparas = new FileStream("PodcastKategorier.xml", FileMode.Create, FileAccess.Write))

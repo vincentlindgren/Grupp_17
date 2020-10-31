@@ -25,11 +25,27 @@ namespace BLL
             dataSerializer.Serialize(kategoriLista);
         }
 
+        //Metod för ändra kategorinamn, metod nedan kan typ användas med modifieringar. Kalla på SparaKategorier(newKategoriNamn) för att spara & Serializea
 
+        //public Podcast SokPodcastEfterNamn(string sokNamn)
+        //{ //Denna metod kan användas till byte av PodcastNamn med små modifieringar. Ta in sokNamn och newName. Kalla på SparaAllaAndringar();
+
+        //    Podcast returneraPodcastOmHittad = new Podcast();
+        //    List<Podcast> podLista = GetAll();
+
+        //    foreach (var item in podLista)
+        //    {
+        //        if (item.PodcastsNamn.Equals(sokNamn))
+        //        {
+        //            returneraPodcastOmHittad = item;
+        //            break;
+        //        }
+        //    }
+        //    return returneraPodcastOmHittad;
+        //}
 
         public List<PodKategori> GetAllKategorier()
         {
-
             List<PodKategori> kategoriListReturneras = new List<PodKategori>();
 
             try
@@ -42,6 +58,5 @@ namespace BLL
             }
             return kategoriListReturneras;
         }
-    
     }
 }

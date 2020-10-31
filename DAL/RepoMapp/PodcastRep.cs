@@ -49,7 +49,7 @@ namespace DAL.RepoMapp
                 return podListReturneras;
         }
 
-        public Podcast SokPodcastEfterNamn(string sokNamn) {
+        public Podcast SokPodcastEfterNamn(string sokNamn) { //Denna metod kan användas till byte av PodcastNamn med små modifieringar. Ta in sokNamn och newName. Kalla på SparaAllaAndringar();
 
             Podcast returneraPodcastOmHittad = new Podcast();
             List<Podcast> podLista = GetAll();

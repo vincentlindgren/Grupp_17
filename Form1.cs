@@ -91,9 +91,8 @@ namespace Grupp_17
             item1.SubItems.Add(kategori);
 
             PodcastListView.Items.AddRange(new ListViewItem[] { item1 });
-            
-            
         }
+
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) //Metoden funkar!! hämtar namn från vald podcast och konverterar till string
         {
@@ -198,12 +197,10 @@ namespace Grupp_17
                 {
                     MessageBox.Show("du måste välja en kategori");
                 }
-
             }
         }
 
         public void fyllKategorier() { //implementera try catch if ifall det inte finns någon kategori.xml sparad
-
             try
             {
                 List<PodKategori> listaSomReturneras = kategoriKontroller.GetAllKategorier();
