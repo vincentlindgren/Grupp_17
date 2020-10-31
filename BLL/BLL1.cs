@@ -17,46 +17,46 @@ namespace BLL
 
         }
 
-        public BLL1(MyXMLSerializer xmlObj) {
-            myXmlObj = new MyXMLSerializer();
-        }
+        //public BLL1(MyXMLSerializer xmlObj) {
+        //    myXmlObj = new MyXMLSerializer();
+        //}
 
-        public void BLL1TestaRSS(string inputURL, string podcastNamn) {
-            avsnittObj.TestaRSS(inputURL, podcastNamn);
+        //public void BLL1TestaRSS(string inputURL, string podcastNamn) {
+        //    //avsnittObj.TestaRSS(inputURL, podcastNamn);
            
-        }
+        //}
 
-        public int BLL1RaknaAvsnitt(string podcastNamn)
-        {
-            int antalAvsnitt = myXmlObj.DeserializeList(podcastNamn);
-            return antalAvsnitt;
+        //public int BLL1RaknaAvsnitt(string podcastNamn)
+        //{
+        //    int antalAvsnitt = myXmlObj.DeserializeList(podcastNamn);
+        //    return antalAvsnitt;
 
-        }
+        //}
 
-        public List<Podcast> LaddaInPodcasts() {
+        //public List<Podcast> LaddaInPodcasts() {
 
-            List<Podcast> podListIBll = myXmlObj.DeserializePodcastList();
-            return podListIBll;
-        }
+        //    List<Podcast> podListIBll = myXmlObj.DeserializePodcastList();
+        //    return podListIBll;
+        //}
 
 
-        public void SkickaPodInfoTillPodInfoSkapandet(string podcastNamn, string podcastURL, string podcastKategori, int antalAvsnitt) {
-            List<Podcast> podLista = new List<Podcast>();
-           // podLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+        //public void SkickaPodInfoTillPodInfoSkapandet(string podcastNamn, string podcastURL, string podcastKategori, int antalAvsnitt) {
+        //    List<Podcast> podLista = new List<Podcast>();
+        //   // podLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
 
-            ListsForXml listsForXml = new ListsForXml();
+        //    ListsForXml listsForXml = new ListsForXml();
 
-            listsForXml.podcastLista = podLista;
+        //    listsForXml.podcastLista = podLista;
 
-            try
-            {
-                //podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
-                myXmlObj.Serialize(listsForXml);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
+        //    try
+        //    {
+        //        //podcastLista.Add(new Podcast(podcastNamn, podcastURL, podcastKategori, antalAvsnitt));
+        //        myXmlObj.Serialize(listsForXml);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e);
+        //    }
+        //}
     }
 }

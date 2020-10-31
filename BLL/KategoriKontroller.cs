@@ -14,28 +14,34 @@ namespace BLL
         public KategoriKontroller() {
             kategoriLista = new List<PodKategori>();
             dataSerializer = new DataSerializer();
+            kategoriLista = GetAllKategorier();
         }
         
 
         public void SparaKategorier(string kategoriNamn) {
             PodKategori kategoriAttLäggaTill = new PodKategori(kategoriNamn);
             kategoriLista.Add(kategoriAttLäggaTill);
+            
             dataSerializer.Serialize(kategoriLista);
         }
 
-        public List<PodKategori> LaddaInKategorier() {
-            List<PodKategori> kategoriListaAttReturnera = new List<PodKategori>();
 
-            List<PodKategori> laddaKategoriLista = dataSerializer.DeserializeKategoriLista();
 
-            foreach (var item in laddaKategoriLista)
+        public List<PodKategori> GetAllKategorier()
+        {
+
+            List<PodKategori> kategoriListReturneras = new List<PodKategori>();
+
+            try
             {
-                kategoriListaAttReturnera.Add(item);
+                kategoriListReturneras = dataSerializer.DeserializeKategoriLista();
             }
-            Console.WriteLine(kategoriListaAttReturnera);
-            return kategoriListaAttReturnera;
-            
-
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+            }
+            return kategoriListReturneras;
         }
+    
     }
 }

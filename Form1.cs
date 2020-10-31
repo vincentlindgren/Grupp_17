@@ -110,9 +110,10 @@ namespace Grupp_17
                 try
                 {
                     listViewAvsnitt.Items.Clear();
-                    int avsnittsnummer = 0;
+                    int avsnittsnummer = podcastKontroller.HamtaAntalAvsnitt(text) +1; //Hämta antal avsnitt för podcastObjekt för att räkna och skriva avsnittsnummer i avsnittslistan.
+
                 foreach (var item in avsnittLista) {
-                        avsnittsnummer++; //sätt avsnittnummer till avsnittskontroller.raknaAvsnitt() och kör avsnittsnummer --; istället / räkna ner
+                        avsnittsnummer = avsnittsnummer-1; 
                         ListViewItem avsnittItem = new ListViewItem(new[] { avsnittsnummer.ToString(), item.AvsnittsNummer }); ;
                         listViewAvsnitt.Items.Add(avsnittItem);
                     }
@@ -202,12 +203,19 @@ namespace Grupp_17
         }
 
         public void fyllKategorier() { //implementera try catch if ifall det inte finns någon kategori.xml sparad
-            List<PodKategori> listaSomReturneras = kategoriKontroller.LaddaInKategorier();
 
-            foreach (var pod in listaSomReturneras)
+            try
             {
-                listBoxKategorier.Items.Add(pod.KategoriNamn);
-                cmbKategori.Items.Add(pod.KategoriNamn);
+                List<PodKategori> listaSomReturneras = kategoriKontroller.GetAllKategorier();
+
+                foreach (var pod in listaSomReturneras)
+                {
+                    listBoxKategorier.Items.Add(pod.KategoriNamn);
+                    cmbKategori.Items.Add(pod.KategoriNamn);
+                }
+            }
+            catch (FileNotFoundException exc) {
+                Console.WriteLine(exc);
             }
         }
 

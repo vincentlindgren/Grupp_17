@@ -64,6 +64,19 @@ namespace DAL.RepoMapp
             return returneraPodcastOmHittad;
         }
 
+        public int ReturnAntalAvsnitt(string namn) {
+            List<Podcast> podLista = GetAll();
+            int returneraAntalAvsnitt = 0;
+            foreach (var item in podLista)
+            {
+                if (item.PodcastsNamn.Equals(namn))
+                {
+                    returneraAntalAvsnitt = item.AntalAvsnitt;
+                    break;
+                }
+            }
+            return returneraAntalAvsnitt;
+        }
 
 
         public List<Podcast> SokPodcastEfterKategori(string sokKategori) { //ska kallas på när man väljer kategori från cmb samt när man delete'ar alla podcasts i en kategori
@@ -80,6 +93,11 @@ namespace DAL.RepoMapp
 
         public string HamtaNamn(int index) {
             return podLista[index].PodcastsNamn;
+        }
+
+        public string HamtaURL(int index)
+        {
+            return podLista[index].PodcastsUrl;
         }
     }
 }

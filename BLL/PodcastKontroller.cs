@@ -45,5 +45,9 @@ namespace BLL
             }
         }
 
+        public int HamtaAntalAvsnitt(string namn) {
+            int antalAvsnittAttReturnera = podRep.ReturnAntalAvsnitt(namn);
+            return antalAvsnittAttReturnera;
+        }
     }
 }

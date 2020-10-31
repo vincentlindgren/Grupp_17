@@ -25,22 +25,18 @@ namespace BLL
                 XmlReader reader = XmlReader.Create(inputURL);
                 SyndicationFeed feed = SyndicationFeed.Load(reader);
 
-                Console.WriteLine("--- Title ---" + feed.Title.Text);
-                Console.WriteLine("--- Description ---" + feed.Description.Text);
-                Console.WriteLine();
-
-                //List<Avsnitt> avsnittLista = new List<Avsnitt>();
+                //Console.WriteLine("--- Title ---" + feed.Title.Text);
+                //Console.WriteLine("--- Description ---" + feed.Description.Text);
+                //Console.WriteLine();
 
                 foreach (var item in feed.Items)
                 {
-
                     avsnittLista.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
-
-                    Console.WriteLine(item.Title.Text);
-                    Console.WriteLine("-> " + item.Summary.Text);
-                    Console.WriteLine();
+                    //Console.WriteLine(item.Title.Text);
+                    //Console.WriteLine("-> " + item.Summary.Text);
+                    //Console.WriteLine();
                 }
-                //return avsnittLista; //Se till att när denna metod kallas på att den returnerade List<Avsnitt> faktiskt skickas till Serialize-metoden
+                //Se till att när denna metod kallas på att den returnerade List<Avsnitt> faktiskt skickas till Serialize-metoden
             }
             catch (Exception e) //Fixa bättre exception-hantering än denna som fångar ALLA exceptions lol
             {
@@ -50,7 +46,7 @@ namespace BLL
             return avsnittLista;
         }
 
-        public List<Avsnitt> HamtaAvsnittForPodcast(string valdPodcast) 
+        public List<Avsnitt> HamtaAvsnittForPodcast(string valdPodcast) //Denna kod kan användas för att hämta alla podcasts för en kategori
         {
             List<Avsnitt> avsnittListaAttReturnera = new List<Avsnitt>();
             List<Podcast> podcastLista = podRep.GetAll();
@@ -64,25 +60,6 @@ namespace BLL
             }
             return avsnittListaAttReturnera;
         }
-
-        //public Podcast SokPodcastEfterNamn(string sokNamn)
-        //{
-
-        //    Podcast returneraPodcastOmHittad = new Podcast();
-        //    List<Podcast> podLista = GetAll();
-
-        //    foreach (var item in podLista)
-        //    {
-        //        if (item.PodcastsNamn.Equals(sokNamn))
-        //        {
-        //            returneraPodcastOmHittad = item;
-        //            break;
-        //        }
-        //    }
-        //    return returneraPodcastOmHittad;
-        //}
-
-
 
         public int RaknaAntalAvsnitt(string url) //implementera TRY CATCH för om den inte hittar filen
         {

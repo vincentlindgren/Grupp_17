@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
             "Testa första",
             "",
             "",
@@ -285,7 +285,7 @@
             this.KategoriHeader});
             this.PodcastListView.HideSelection = false;
             this.PodcastListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
+            listViewItem10});
             this.PodcastListView.Location = new System.Drawing.Point(16, 12);
             this.PodcastListView.MultiSelect = false;
             this.PodcastListView.Name = "PodcastListView";
@@ -335,10 +335,12 @@
             // AvsnittsNummer
             // 
             this.AvsnittsNummer.Text = "Avsnittsnummer";
+            this.AvsnittsNummer.Width = 90;
             // 
             // AvsnittsNamn
             // 
             this.AvsnittsNamn.Text = "Avsnitssnamn";
+            this.AvsnittsNamn.Width = 385;
             // 
             // Form1
             // 
