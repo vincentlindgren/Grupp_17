@@ -17,6 +17,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using DAL;
 using BLL;
 using DAL.RepoMapp;
+using System.Linq.Expressions;
 
 
 //Kalla på metoder i logiklagret från denna klass. 
@@ -27,8 +28,9 @@ namespace Grupp_17
     {
 
         //Avsnitt avsnitt = new Avsnitt();
-        public BLL1 bll1Objekt { get; set; } //Döp om BLL1 klassen till något beskrivande istället
+        public BLL1 bll1Objekt { get; set; } //ANVÄNDS EJ
         public Podcast podcastObj { get; set; }
+
         AvsnittKontroller avsnittKontroller = new AvsnittKontroller();
 
         PodcastKontroller podcastKontroller = new PodcastKontroller();
@@ -36,6 +38,10 @@ namespace Grupp_17
 
         KategoriKontroller kategoriKontroller = new KategoriKontroller();
         PodKategori podKategori = new PodKategori();
+
+        Validering validation = new Validering();
+
+        
 
         public Form1()
         {
@@ -64,34 +70,51 @@ namespace Grupp_17
 
         private void btnSpara_Click(object sender, EventArgs e)
         {
-            string inputURL = txtBoxURL.Text;
-            string podcastNamn;
-
-
-            if (string.IsNullOrEmpty(txtBoxPodcastNamn.Text)) //Hämtar podcastens orginalnamn om "namnTxtBox" lämnas tom
+            try
             {
-                string podcastOmEmpty = podcastKontroller.HamtaPodcastNamn(inputURL);
-                podcastNamn = podcastOmEmpty;
+                string inputURL = txtBoxURL.Text;
+                string podcastNamn;
+
+                if (validation.KorrektURLAdress(inputURL) && validation.ValdFrekvens(CmbUpdateFrekvens.Text))
+                {
+                    if (cmbKategori.SelectedItem != null)
+                    {
+                        if (string.IsNullOrEmpty(txtBoxPodcastNamn.Text))
+                        {
+                            //string frekvens = CmbUpdateFrekvens.SelectedItem.ToString();
+                            //string kategori = cmbKategori.SelectedItem.ToString();
+
+                            string podcastOmEmpty = podcastKontroller.HamtaPodcastNamn(inputURL);
+                            podcastNamn = podcastOmEmpty;
+                        }
+                        else
+                        {
+                            podcastNamn = txtBoxPodcastNamn.Text;
+                        }
+
+                        string frekvens = CmbUpdateFrekvens.SelectedItem.ToString();
+                        string kategori = cmbKategori.Text;
+                        int antalAvsnitt = avsnittKontroller.RaknaAntalAvsnitt(inputURL);
+
+                        podcastKontroller.SkapaListForEnskildPodcast(podcastNamn, inputURL, kategori, frekvens);
+
+                        ListViewItem item1 = new ListViewItem(podcastNamn); //var tidigare (podcastNamn, antalAvsnitt)- återgå om ej funkar med endast podcastNamn
+                        item1.SubItems.Add(antalAvsnitt.ToString());
+                        item1.SubItems.Add(frekvens);
+                        item1.SubItems.Add(kategori);
+
+                        PodcastListView.Items.AddRange(new ListViewItem[] { item1 });
+                    }
+                    else {
+                        MessageBox.Show("Vänligen välj en kategori!");
+                    }
+                }
             }
-            else
-            {  //Döper om podcastens namn om "namnTxtBox" innehåller en sträng
-                podcastNamn = txtBoxPodcastNamn.Text;
+            catch (AnvandarException E) {
+                MessageBox.Show(E.Message);
             }
-
-            string frekvens = CmbUpdateFrekvens.SelectedItem.ToString();
-            string kategori = cmbKategori.SelectedItem.ToString();
-            int antalAvsnitt = avsnittKontroller.RaknaAntalAvsnitt(inputURL);
-
-            podcastKontroller.SkapaListForEnskildPodcast(podcastNamn, inputURL, kategori, frekvens);
-
-
-            ListViewItem item1 = new ListViewItem(podcastNamn); //var tidigare (podcastNamn, antalAvsnitt)- återgå om ej funkar med endast podcastNamn
-            item1.SubItems.Add(antalAvsnitt.ToString());
-            item1.SubItems.Add(frekvens);
-            item1.SubItems.Add(kategori);
-
-            PodcastListView.Items.AddRange(new ListViewItem[] { item1 });
         }
+        
 
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) //Metoden funkar!! hämtar namn från vald podcast och konverterar till string
@@ -146,10 +169,6 @@ namespace Grupp_17
             {
                 Console.WriteLine(ex);
             }
-            //catch (FileNotFoundException exFileNotFound)
-            //{
-            //    Console.WriteLine(exFileNotFound);
-            //}
         }
 
         private void btnNyKategori_Click(object sender, EventArgs e)
@@ -162,11 +181,14 @@ namespace Grupp_17
                     listBoxKategorier.Items.Add(kategoriNamn);
                     cmbKategori.Items.Add(kategoriNamn);
                     textBox2.Text = "";
-
+                }
+                else
+                {
+                    MessageBox.Show("Textfältet är tomt");
                 }
             }
-
         }
+
 
         private void btnSparaKategori_Click(object sender, EventArgs e)
         {
@@ -229,6 +251,11 @@ namespace Grupp_17
         }
 
         private void listViewAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

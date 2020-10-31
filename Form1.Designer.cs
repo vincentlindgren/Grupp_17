@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "Testa första",
             "",
             "",
@@ -82,6 +82,7 @@
             this.cmbKategori.Name = "cmbKategori";
             this.cmbKategori.Size = new System.Drawing.Size(134, 21);
             this.cmbKategori.TabIndex = 1;
+            this.cmbKategori.SelectedIndexChanged += new System.EventHandler(this.cmbKategori_SelectedIndexChanged);
             // 
             // btnNy
             // 
@@ -285,7 +286,7 @@
             this.KategoriHeader});
             this.PodcastListView.HideSelection = false;
             this.PodcastListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10});
+            listViewItem1});
             this.PodcastListView.Location = new System.Drawing.Point(16, 12);
             this.PodcastListView.MultiSelect = false;
             this.PodcastListView.Name = "PodcastListView";
