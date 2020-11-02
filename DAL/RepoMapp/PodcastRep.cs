@@ -24,11 +24,29 @@ namespace DAL.RepoMapp
             
         }
 
-        public void Delete(int index) {
-
-              podLista.RemoveAt(index);
-            
+        public void Delete2(int index) {
+            podLista.RemoveAt(index);
+            SparaAllaAndringar();
         }
+
+        public void Delete(int index) {
+            //podLista.RemoveAt(index);
+            List<Podcast> nyLista = GetAll();
+            nyLista.RemoveAt(index);
+            podLista = nyLista;
+            SparaAllaAndringar();
+        }
+
+        public void DeleteForPodNamn(string namn) {
+            List<Podcast> nyLista = GetAll();
+            foreach (var podcast in nyLista)
+            {
+                if (podcast.PodcastsNamn.Equals(namn)) {
+                    podcast.avsnittsLista.Clear();
+                }
+            }
+        }
+
 
         public void SparaAllaAndringar() {
             dataSerializer.Serialize(podLista);

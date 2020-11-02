@@ -28,14 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "Testa första",
-            "",
-            "",
-            ""}, -1);
             this.CmbUpdateFrekvens = new System.Windows.Forms.ComboBox();
             this.cmbKategori = new System.Windows.Forms.ComboBox();
-            this.btnNy = new System.Windows.Forms.Button();
             this.btnSpara = new System.Windows.Forms.Button();
             this.btnTaBort = new System.Windows.Forms.Button();
             this.txtBoxURL = new System.Windows.Forms.TextBox();
@@ -64,6 +58,7 @@
             this.listViewAvsnitt = new System.Windows.Forms.ListView();
             this.AvsnittsNummer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AvsnittsNamn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnVisaAllaPods = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // CmbUpdateFrekvens
@@ -84,18 +79,9 @@
             this.cmbKategori.TabIndex = 1;
             this.cmbKategori.SelectedIndexChanged += new System.EventHandler(this.cmbKategori_SelectedIndexChanged);
             // 
-            // btnNy
-            // 
-            this.btnNy.Location = new System.Drawing.Point(245, 317);
-            this.btnNy.Name = "btnNy";
-            this.btnNy.Size = new System.Drawing.Size(87, 23);
-            this.btnNy.TabIndex = 2;
-            this.btnNy.Text = "Ny";
-            this.btnNy.UseVisualStyleBackColor = true;
-            // 
             // btnSpara
             // 
-            this.btnSpara.Location = new System.Drawing.Point(338, 317);
+            this.btnSpara.Location = new System.Drawing.Point(245, 318);
             this.btnSpara.Name = "btnSpara";
             this.btnSpara.Size = new System.Drawing.Size(87, 23);
             this.btnSpara.TabIndex = 3;
@@ -105,12 +91,13 @@
             // 
             // btnTaBort
             // 
-            this.btnTaBort.Location = new System.Drawing.Point(431, 346);
+            this.btnTaBort.Location = new System.Drawing.Point(435, 320);
             this.btnTaBort.Name = "btnTaBort";
             this.btnTaBort.Size = new System.Drawing.Size(87, 23);
             this.btnTaBort.TabIndex = 4;
             this.btnTaBort.Text = "Ta bort";
             this.btnTaBort.UseVisualStyleBackColor = true;
+            this.btnTaBort.Click += new System.EventHandler(this.btnTaBort_Click);
             // 
             // txtBoxURL
             // 
@@ -142,6 +129,7 @@
             this.listBoxKategorier.Name = "listBoxKategorier";
             this.listBoxKategorier.Size = new System.Drawing.Size(328, 199);
             this.listBoxKategorier.TabIndex = 8;
+            this.listBoxKategorier.SelectedIndexChanged += new System.EventHandler(this.listBoxKategorier_SelectedIndexChanged);
             // 
             // btnNyKategori
             // 
@@ -171,6 +159,7 @@
             this.btnTaBortKategori.TabIndex = 11;
             this.btnTaBortKategori.Text = "Ta bort";
             this.btnTaBortKategori.UseVisualStyleBackColor = true;
+            this.btnTaBortKategori.Click += new System.EventHandler(this.btnTaBortKategori_Click);
             // 
             // lblPodcastAvsnitt
             // 
@@ -254,9 +243,9 @@
             // 
             // btnAndra
             // 
-            this.btnAndra.Location = new System.Drawing.Point(431, 318);
+            this.btnAndra.Location = new System.Drawing.Point(338, 318);
             this.btnAndra.Name = "btnAndra";
-            this.btnAndra.Size = new System.Drawing.Size(87, 22);
+            this.btnAndra.Size = new System.Drawing.Size(87, 24);
             this.btnAndra.TabIndex = 22;
             this.btnAndra.Text = "Ändra";
             this.btnAndra.UseVisualStyleBackColor = true;
@@ -285,8 +274,6 @@
             this.IntervallHeader,
             this.KategoriHeader});
             this.PodcastListView.HideSelection = false;
-            this.PodcastListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
             this.PodcastListView.Location = new System.Drawing.Point(16, 12);
             this.PodcastListView.MultiSelect = false;
             this.PodcastListView.Name = "PodcastListView";
@@ -343,11 +330,22 @@
             this.AvsnittsNamn.Text = "Avsnitssnamn";
             this.AvsnittsNamn.Width = 385;
             // 
+            // btnVisaAllaPods
+            // 
+            this.btnVisaAllaPods.Location = new System.Drawing.Point(589, 331);
+            this.btnVisaAllaPods.Name = "btnVisaAllaPods";
+            this.btnVisaAllaPods.Size = new System.Drawing.Size(101, 21);
+            this.btnVisaAllaPods.TabIndex = 25;
+            this.btnVisaAllaPods.Text = "Visa alla";
+            this.btnVisaAllaPods.UseVisualStyleBackColor = true;
+            this.btnVisaAllaPods.Click += new System.EventHandler(this.btnVisaAllaPods_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 583);
+            this.Controls.Add(this.btnVisaAllaPods);
             this.Controls.Add(this.listViewAvsnitt);
             this.Controls.Add(this.PodcastListView);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -370,7 +368,6 @@
             this.Controls.Add(this.txtBoxURL);
             this.Controls.Add(this.btnTaBort);
             this.Controls.Add(this.btnSpara);
-            this.Controls.Add(this.btnNy);
             this.Controls.Add(this.cmbKategori);
             this.Controls.Add(this.CmbUpdateFrekvens);
             this.Name = "Form1";
@@ -384,7 +381,6 @@
 
         private System.Windows.Forms.ComboBox CmbUpdateFrekvens;
         private System.Windows.Forms.ComboBox cmbKategori;
-        private System.Windows.Forms.Button btnNy;
         private System.Windows.Forms.Button btnSpara;
         private System.Windows.Forms.Button btnTaBort;
         private System.Windows.Forms.TextBox txtBoxURL;
@@ -413,6 +409,7 @@
         private System.Windows.Forms.ListView listViewAvsnitt;
         private System.Windows.Forms.ColumnHeader AvsnittsNummer;
         private System.Windows.Forms.ColumnHeader AvsnittsNamn;
+        private System.Windows.Forms.Button btnVisaAllaPods;
     }
 }
 

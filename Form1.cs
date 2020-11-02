@@ -18,6 +18,8 @@ using DAL;
 using BLL;
 using DAL.RepoMapp;
 using System.Linq.Expressions;
+using System.Diagnostics;
+using System.Timers;
 
 
 //Kalla på metoder i logiklagret från denna klass. 
@@ -33,6 +35,7 @@ namespace Grupp_17
 
         AvsnittKontroller avsnittKontroller = new AvsnittKontroller();
 
+
         PodcastKontroller podcastKontroller = new PodcastKontroller();
         PodcastRep podcastRep = new PodcastRep();
 
@@ -41,7 +44,7 @@ namespace Grupp_17
 
         Validering validation = new Validering();
 
-        
+        private static System.Timers.Timer timer;
 
         public Form1()
         {
@@ -50,6 +53,8 @@ namespace Grupp_17
             VisaPodcastsIListView();
             fyllFrekvens();
             fyllKategorier();
+            hamtaAllaMinIntervall();
+
 
         }
 
@@ -68,7 +73,7 @@ namespace Grupp_17
 
         }
 
-        private void btnSpara_Click(object sender, EventArgs e)
+        private async void btnSpara_Click(object sender, EventArgs e)
         {
             try
             {
@@ -81,9 +86,6 @@ namespace Grupp_17
                     {
                         if (string.IsNullOrEmpty(txtBoxPodcastNamn.Text))
                         {
-                            //string frekvens = CmbUpdateFrekvens.SelectedItem.ToString();
-                            //string kategori = cmbKategori.SelectedItem.ToString();
-
                             string podcastOmEmpty = podcastKontroller.HamtaPodcastNamn(inputURL);
                             podcastNamn = podcastOmEmpty;
                         }
@@ -96,9 +98,9 @@ namespace Grupp_17
                         string kategori = cmbKategori.Text;
                         int antalAvsnitt = avsnittKontroller.RaknaAntalAvsnitt(inputURL);
 
-                        podcastKontroller.SkapaListForEnskildPodcast(podcastNamn, inputURL, kategori, frekvens);
+                        await podcastKontroller.SkapaListForEnskildPodcastAsync(podcastNamn, inputURL, kategori, frekvens);
 
-                        ListViewItem item1 = new ListViewItem(podcastNamn); //var tidigare (podcastNamn, antalAvsnitt)- återgå om ej funkar med endast podcastNamn
+                        ListViewItem item1 = new ListViewItem(podcastNamn); 
                         item1.SubItems.Add(antalAvsnitt.ToString());
                         item1.SubItems.Add(frekvens);
                         item1.SubItems.Add(kategori);
@@ -114,10 +116,10 @@ namespace Grupp_17
                 MessageBox.Show(E.Message);
             }
         }
-        
 
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e) //Metoden funkar!! hämtar namn från vald podcast och konverterar till string
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e) 
         {
             if (PodcastListView.SelectedIndices.Count <= 0)
             {
@@ -128,14 +130,14 @@ namespace Grupp_17
             if (valdIndex >= 0)
             {
                 string text = PodcastListView.Items[valdIndex].Text;
-                List<Avsnitt> avsnittLista = avsnittKontroller.HamtaAvsnittForPodcast(text); //igen DAL-connection här, kan lösas med models. Viktigt?
+                List<Avsnitt> avsnittLista = avsnittKontroller.HamtaAvsnittForPodcast(text); 
                 try
                 {
                     listViewAvsnitt.Items.Clear();
-                    int avsnittsnummer = podcastKontroller.HamtaAntalAvsnitt(text) +1; //Hämta antal avsnitt för podcastObjekt för att räkna och skriva avsnittsnummer i avsnittslistan.
+                    int avsnittsnummer = podcastKontroller.HamtaAntalAvsnitt(text) + 1; //Hämta antal avsnitt för podcastObjekt för att räkna och skriva avsnittsnummer i avsnittslistan.
 
-                foreach (var item in avsnittLista) {
-                        avsnittsnummer = avsnittsnummer-1; 
+                    foreach (var item in avsnittLista) {
+                        avsnittsnummer = avsnittsnummer - 1;
                         ListViewItem avsnittItem = new ListViewItem(new[] { avsnittsnummer.ToString(), item.AvsnittsNummer }); ;
                         listViewAvsnitt.Items.Add(avsnittItem);
                     }
@@ -144,20 +146,15 @@ namespace Grupp_17
                 {
                     Console.WriteLine(skrivException);
                 }
-
-
             }
-            //lblAvsnittPresentation.Text = BLL1.BLL1RaknaAvsnitt(podcastNamn).ToString();
-            //string returneradPodNamn = Avsnitt.hamtaPodcastNamn(podcastNamn);
-            //int antalAvsnitt = Avsnitt.RaknaAvsnitt(returneradPodNamn);
-            //lblAvsnittPresentation.Text = antalAvsnitt.ToString(); //Ändra denna rad, använder lbl endast för att se resultat för test!!!
+            
         }
 
         public void VisaPodcastsIListView()
         {
             try
             {
-                List<Podcast> podcastsSomLaddas = podcastRep.GetAll();
+                List<Podcast> podcastsSomLaddas = podcastRep.GetAll(); //Fixa metod i PodcastKontroller som hämtar GetAll() från podcastRep DAL.
 
                 foreach (var pod in podcastsSomLaddas)
                 {
@@ -165,9 +162,10 @@ namespace Grupp_17
                     PodcastListView.Items.Add(podcastItem);
                 }
             }
-            catch (Exception ex)
+            catch (FileNotFoundException e)
             {
-                Console.WriteLine(ex);
+
+                Console.WriteLine(e);
             }
         }
 
@@ -222,7 +220,7 @@ namespace Grupp_17
             }
         }
 
-        public void fyllKategorier() { //implementera try catch if ifall det inte finns någon kategori.xml sparad
+        public void fyllKategorier() { 
             try
             {
                 List<PodKategori> listaSomReturneras = kategoriKontroller.GetAllKategorier();
@@ -259,5 +257,248 @@ namespace Grupp_17
         {
 
         }
+
+        public void hamtaAllaMinIntervall()//Dessa används för att starta timers för respektive podcast
+        {
+            try
+            {
+                List<string> tioMinList = podcastKontroller.HamtaPodcastsForMinuter("10");
+                List<string> trettioMinList = podcastKontroller.HamtaPodcastsForMinuter("30");
+                List<string> sextioMinList = podcastKontroller.HamtaPodcastsForMinuter("60");
+
+                foreach (var item in tioMinList)
+                {
+                    int intervall = 10;
+                    StartaTimer(intervall);
+                    Console.WriteLine(item);
+                }
+
+                foreach (var item in trettioMinList)
+                {
+                    int intervall = 30;
+                    StartaTimer(intervall);
+                    Console.WriteLine(item);
+                }
+
+                foreach (var item in sextioMinList)
+                {
+                    int intervall = 60;
+                    StartaTimer(intervall);
+                    Console.WriteLine(item);
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e);
+            }
+        }
+
+
+        private void StartaTimer(int intervall)
+        {
+            
+            if (intervall == 10) {
+                timer = new System.Timers.Timer();
+                timer.Interval = 6000; //00; 
+                timer.Elapsed += OnTimedEvent10;
+                timer.AutoReset = true;
+                timer.Enabled = true;
+                Console.WriteLine(intervall.ToString());
+            }
+             
+            else if (intervall == 30)
+                {
+                    timer = new System.Timers.Timer();
+                timer.Interval = 1800000; 
+                    timer.Elapsed += OnTimedEvent30;
+                    timer.AutoReset = true;
+                    timer.Enabled = true;
+                    Console.WriteLine(intervall.ToString());
+                }
+            else if (intervall == 60) {
+                timer = new System.Timers.Timer();
+                timer.Interval = 3600000;
+                timer.Elapsed += OnTimedEvent60;
+                timer.AutoReset = true;
+                timer.Enabled = true;
+                Console.WriteLine(intervall.ToString());
+            }
+        }
+
+        private void OnTimedEvent10(Object source, System.Timers.ElapsedEventArgs e) {
+            List<string> tioMinList = podcastKontroller.HamtaPodcastsForMinuter("10");
+            podcastKontroller.UppdateraPodcastForMinIntervallPK(tioMinList);
+            Console.WriteLine("5 sekunder har gått: tioMinList");
+        }
+
+        private void OnTimedEvent30(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            List<string> trettioMinList = podcastKontroller.HamtaPodcastsForMinuter("30");
+            podcastKontroller.UppdateraPodcastForMinIntervallPK(trettioMinList);
+            Console.WriteLine("8 sekunder har gått: trettioMinList");
+        }
+        private void OnTimedEvent60(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            List<string> sextioMinList = podcastKontroller.HamtaPodcastsForMinuter("60");
+            podcastKontroller.UppdateraPodcastForMinIntervallPK(sextioMinList);
+        }
+
+        private void btnTaBort_Click(object sender, EventArgs e)
+        {
+            int valdIndex = PodcastListView.SelectedIndices[0];
+            try
+            {
+                if (valdIndex >= 0)
+                {
+                    if (DialogResult.Yes == MessageBox.Show
+                      ("Vill du ta bort podden?", "Confirmation",
+                       MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    {
+
+                        string poddAttTaBort = PodcastListView.Items[valdIndex].Text;
+
+                        string url = podcastKontroller.HamtaPodcastURL(poddAttTaBort);
+                        podcastKontroller.DeletePoddcastAtUrlCompare(url);
+                        PodcastListView.Items.RemoveAt(valdIndex);
+                        Console.WriteLine(url);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Försök igen. Vänligen välj en podd att ta bort");
+                }
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show("Det gick inte att ta bort podden, försök igen!");
+                Console.WriteLine(excep);
+            }
+        }
+
+        private void listBoxKategorier_SelectedIndexChanged(object sender, EventArgs e) //Sortera podcasts efter kategori
+        {
+            if (listBoxKategorier.SelectedIndices.Count <= 0)
+            {
+                return;
+            }
+            int valdIndex = listBoxKategorier.SelectedIndices[0];
+
+            if (valdIndex >= 0)
+            {
+                string text = listBoxKategorier.Items[valdIndex].ToString();
+                List<Podcast> podListaForKategori = kategoriKontroller.SokPodcastEfterPodcastKategori(text);
+                try
+                {
+                    PodcastListView.Items.Clear();
+
+                    foreach (var item in podListaForKategori)
+                    {
+                        ListViewItem podcastItem = new ListViewItem(new[] { item.PodcastsNamn, item.AntalAvsnitt.ToString(), item.Frekvens, item.PodcastsKategori }); ;
+                        PodcastListView.Items.Add(podcastItem);
+                    }
+                }
+                catch (ArgumentOutOfRangeException skrivException)
+                {
+                    Console.WriteLine(skrivException);
+                }
+            }
+        }
+
+        private void btnVisaAllaPods_Click(object sender, EventArgs e) //Återställer och visar samtliga podcasts igen
+        {
+            if (listBoxKategorier.SelectedIndices.Count <= 0)
+            {
+                return;
+            }
+            ClearAndReload();
+
+
+
+        }
+
+        private void btnNy_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnTaBortKategori_Click(object sender, EventArgs e)
+        {
+            if (listBoxKategorier.SelectedIndices.Count <= 0)
+            {
+                return;
+            }
+            int valdIndex = listBoxKategorier.SelectedIndices[0];
+            try
+            {
+                if (valdIndex >= 0)
+                {
+                    if (DialogResult.Yes == MessageBox.Show
+                      ("Vill du ta bort kategorin och alla Podcasts i kategorin?", "Confirmation",
+                       MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                    {
+
+                        string kategoriAttTaBort = listBoxKategorier.Items[valdIndex].ToString();
+
+                        string katNamn = kategoriKontroller.HamtaKategoriNamn(kategoriAttTaBort);
+                        kategoriKontroller.DeletePoddcastAtKategoriCompare(katNamn);
+
+                        List<Podcast> poddarSomSkaDeletas = kategoriKontroller.SokPodcastEfterPodcastKategori(kategoriAttTaBort);
+
+                        int i = 0;
+                        int i2 = 0;
+                        foreach (var item in poddarSomSkaDeletas)
+                            i2++;
+                        Console.WriteLine(i2);
+                        {
+
+                        
+                        while (i < i2) {
+                                Console.WriteLine(i);
+                                podcastKontroller.KallaPaDelete(i);
+                            i++;
+                            ClearAndReload();
+                            
+                            //listBoxKategorier.ClearSelected();
+                            
+
+                        }
+                           
+                            //for(int i = 0; i<poddarSomSkaDeletas.Count(); i++)
+                            //{
+                            //    podcastKontroller.KallaPaDelete(i);
+                            //}
+
+                        
+
+                        //podcastKontroller.KallaPaDelete(valdIndex);
+                        Console.WriteLine(katNamn);
+                        ClearAndReload();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Försök igen. Vänligen välj en kategori att ta bort");
+                }
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show("Det gick inte att ta bort kategorin, försök igen!");
+                Console.WriteLine(excep);
+            }
+
+
+        }
+
+        public void ClearAndReload() {
+            listBoxKategorier.ClearSelected();
+            listBoxKategorier.Items.Clear();
+            PodcastListView.Items.Clear();
+            cmbKategori.Items.Clear();
+            cmbKategori.Text = "";
+            VisaPodcastsIListView();
+            fyllKategorier();
+            
+        }
     }
 }
+
+

@@ -9,6 +9,7 @@ namespace DAL.RepoMapp
         void Skapa(T entity);
         void Spara(int index, T entity);
         void Delete(int index);
+        void Delete2(int index);
         void SparaAllaAndringar();
         List<T> GetAll();
 

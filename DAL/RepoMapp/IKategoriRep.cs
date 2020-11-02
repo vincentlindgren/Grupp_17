@@ -4,9 +4,10 @@ using System.Text;
 
 namespace DAL.RepoMapp
 {
-    public interface IPodcastRep <T> : IRep <T> where T : Podcast
+    public interface IKategoriRep<T> : IRep<T> where T : PodKategori
     {
-        T SokPodcastEfterNamn(string sokNamn);
+
+        T SokKategoriEfterNamn(string sokNamn);
         string HamtaNamn(int index);
     }
 }

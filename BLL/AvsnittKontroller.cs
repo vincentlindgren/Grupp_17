@@ -5,6 +5,7 @@ using DAL;
 using System.ServiceModel.Syndication;
 using System.Xml;
 using DAL.RepoMapp;
+using System.Threading.Tasks;
 
 namespace BLL
 {
@@ -17,7 +18,7 @@ namespace BLL
         }
 
 
-        public List<Avsnitt> HamtaAvsnittMedRssUrl(string inputURL) 
+        public async Task<List<Avsnitt>> HamtaAvsnittMedRssUrlAsync(string inputURL)
         {
             List<Avsnitt> avsnittLista = new List<Avsnitt>();
             try
@@ -28,20 +29,41 @@ namespace BLL
                 //Console.WriteLine("--- Title ---" + feed.Title.Text);
                 //Console.WriteLine("--- Description ---" + feed.Description.Text);
                 //Console.WriteLine();
-
-                foreach (var item in feed.Items)
+                await Task.Run(() =>
                 {
-                    avsnittLista.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
-                    //Console.WriteLine(item.Title.Text);
-                    //Console.WriteLine("-> " + item.Summary.Text);
-                    //Console.WriteLine();
-                }
-                //Se till att när denna metod kallas på att den returnerade List<Avsnitt> faktiskt skickas till Serialize-metoden
+                    foreach (var item in feed.Items)
+                    {
+                        avsnittLista.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
+                        
+                    }
+                    //Se till att när denna metod kallas på att den returnerade List<Avsnitt> faktiskt skickas till Serialize-metoden
+                });
             }
             catch (Exception e) //Fixa bättre exception-hantering än denna som fångar ALLA exceptions lol
             {
                 Console.WriteLine(e);
-                //throw; //throw används för att säga till medtoden att ej returna List<Avsnitt> om den catchar ett exception.
+            }
+            return avsnittLista;
+        }
+
+        public List<Avsnitt> HamtaAvsnittMedRssUrl(string inputURL)
+        {
+            List<Avsnitt> avsnittLista = new List<Avsnitt>();
+            try
+            {
+                XmlReader reader = XmlReader.Create(inputURL);
+                SyndicationFeed feed = SyndicationFeed.Load(reader);
+
+                    foreach (var item in feed.Items)
+                    {
+                        avsnittLista.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
+                        
+                    }
+                    //Se till att när denna metod kallas på att den returnerade List<Avsnitt> faktiskt skickas till Serialize-metoden
+            }
+            catch (Exception e) //Fixa bättre exception-hantering än denna som fångar ALLA exceptions lol
+            {
+                Console.WriteLine(e);
             }
             return avsnittLista;
         }
