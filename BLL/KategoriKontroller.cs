@@ -47,6 +47,7 @@ namespace BLL
                 if (pod.PodcastsKategori.Equals(sokNamn))
                 {
                     returneraPodcastOmHittad.Add(pod);
+                    Console.WriteLine(pod.PodcastsNamn);
                 }
             }
             return returneraPodcastOmHittad;
@@ -84,20 +85,33 @@ namespace BLL
        
         }
 
-
+        public void AnropaSparaKategoriLista() {
+            KategoriRep.SparaAllaAndringar();
+        }
 
         public void DeletePoddcastAtKategoriCompare(string sokNamn) // Samma som i PodcastKontroller KLAR!!!!
         {
-            List<PodKategori> katLista = KategoriRep.GetAll();
+            List<PodKategori> sokKategoriForKategoriList = KategoriRep.GetAll();
 
-            for (int i = 0; i < katLista.Count; i++)
+            foreach (var item in sokKategoriForKategoriList)
             {
-
-                if (katLista[i].KategoriNamn.Equals(sokNamn))
+                if (item.KategoriNamn.Equals(sokNamn))
                 {
-                    KategoriRep.Delete2(i);
+                    int index = sokKategoriForKategoriList.IndexOf(item);
+                    KategoriRep.Delete2(index);
                 }
             }
+            //List<PodKategori> katLista = KategoriRep.GetAll();
+
+            //for (int i = 0; i < katLista.Count; i++)
+            //{
+
+            //    if (katLista[i].KategoriNamn.Equals(sokNamn))
+            //    {
+            //        KategoriRep.Delete2(i);
+            //        Console.WriteLine(sokNamn);
+            //    }
+            //}
         }
 
         //public void DeleteKategoriOchPodcasts(string kategoriNamn) {

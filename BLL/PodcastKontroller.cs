@@ -14,14 +14,14 @@ namespace BLL
     public class PodcastKontroller : KontrollerKlass
     {
         AvsnittKontroller avsnittKontroller = new AvsnittKontroller();
-        private PodcastRep podcastRep;
-        
-        
+
+        PodcastRep podcastRep;
+
+
         public PodcastKontroller()
         {
             podcastRep = new PodcastRep();
         }
-
 
         public string HamtaPodcastNamn(string url)
         {
@@ -223,9 +223,13 @@ namespace BLL
         //    }
         //}
 
+        public void saveChangesPod() {
+            podcastRep.SparaAllaAndringar();
+        }
 
-
-
+        public void AnropaDeleteKatOchPod(string sokNamn) {
+            podcastRep.DeletePodcastEfterKategori(sokNamn);
+        }
 
         //Exempel på virtual nedanför
         public override void KontrollerMetod()

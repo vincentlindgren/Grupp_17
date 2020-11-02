@@ -26,9 +26,6 @@ namespace BLL
                 XmlReader reader = XmlReader.Create(inputURL);
                 SyndicationFeed feed = SyndicationFeed.Load(reader);
 
-                //Console.WriteLine("--- Title ---" + feed.Title.Text);
-                //Console.WriteLine("--- Description ---" + feed.Description.Text);
-                //Console.WriteLine();
                 await Task.Run(() =>
                 {
                     foreach (var item in feed.Items)
@@ -36,10 +33,9 @@ namespace BLL
                         avsnittLista.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
                         
                     }
-                    //Se till att när denna metod kallas på att den returnerade List<Avsnitt> faktiskt skickas till Serialize-metoden
                 });
             }
-            catch (Exception e) //Fixa bättre exception-hantering än denna som fångar ALLA exceptions lol
+            catch (Exception e) 
             {
                 Console.WriteLine(e);
             }

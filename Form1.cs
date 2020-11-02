@@ -430,63 +430,34 @@ namespace Grupp_17
             try
             {
                 if (valdIndex >= 0)
-                {
+            {
                     if (DialogResult.Yes == MessageBox.Show
                       ("Vill du ta bort kategorin och alla Podcasts i kategorin?", "Confirmation",
                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     {
-
                         string kategoriAttTaBort = listBoxKategorier.Items[valdIndex].ToString();
+                        Console.WriteLine(kategoriAttTaBort);
 
-                        string katNamn = kategoriKontroller.HamtaKategoriNamn(kategoriAttTaBort);
-                        kategoriKontroller.DeletePoddcastAtKategoriCompare(katNamn);
-
-                        List<Podcast> poddarSomSkaDeletas = kategoriKontroller.SokPodcastEfterPodcastKategori(kategoriAttTaBort);
-
-                        int i = 0;
-                        int i2 = 0;
-                        foreach (var item in poddarSomSkaDeletas)
-                            i2++;
-                        Console.WriteLine(i2);
-                        {
-
-                        
-                        while (i < i2) {
-                                Console.WriteLine(i);
-                                podcastKontroller.KallaPaDelete(i);
-                            i++;
-                            ClearAndReload();
-                            
-                            //listBoxKategorier.ClearSelected();
-                            
-
-                        }
-                           
-                            //for(int i = 0; i<poddarSomSkaDeletas.Count(); i++)
-                            //{
-                            //    podcastKontroller.KallaPaDelete(i);
-                            //}
-
-                        
-
-                        //podcastKontroller.KallaPaDelete(valdIndex);
-                        Console.WriteLine(katNamn);
-                        ClearAndReload();
-                    }
+                        podcastKontroller.AnropaDeleteKatOchPod(kategoriAttTaBort);
+                        kategoriKontroller.DeletePoddcastAtKategoriCompare(kategoriAttTaBort);
+                
+                        listBoxKategorier.ClearSelected();
+            }
                 }
-                else
-                {
+                    else
+                    {
                     MessageBox.Show("Försök igen. Vänligen välj en kategori att ta bort");
-                }
+                    }
             }
             catch (Exception excep)
             {
                 MessageBox.Show("Det gick inte att ta bort kategorin, försök igen!");
                 Console.WriteLine(excep);
             }
-
-
+            podcastKontroller.saveChangesPod();
+            ClearAndReload();
         }
+        
 
         public void ClearAndReload() {
             listBoxKategorier.ClearSelected();
