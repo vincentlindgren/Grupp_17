@@ -129,33 +129,17 @@ namespace BLL
             podcastRep.AndraPodcastKategori(podcastNamn, newKategori);
         }
 
-        //public List<String> HamtaPodcastsForTrettioMinuter(string trettio)
-        //{
-        //    List<Podcast> podcasts30 = podcastRep.GetAll();
-        //    List<string> trettioMinuter = new List<string>();
-        //    foreach (var item in podcasts30)
-        //    {
-        //        if (item.Frekvens.Equals(trettio))
-        //        {
-        //            trettioMinuter.Add(item.PodcastsUrl);
-        //        }
-        //    }
-        //    return trettioMinuter;  //Kanske returna i Loopen och starta timer efter varje return? Borde funka, kanske....
-        //}
+        public void KallaPaAndraPodcastFrekvens(string podcastNamn, string newFrekvens)
+        {
+            podcastRep.AndraPodcastFrekvens(podcastNamn, newFrekvens);
+            
+        }
 
-        //public List<String> HamtaPodcastsForSextioMinuter(string sextio)
-        //{
-        //    List<Podcast> podcasts60= podcastRep.GetAll();
-        //    List<string> sextioMinuter = new List<string>();
-        //    foreach (var item in podcasts60)
-        //    {
-        //        if (item.Frekvens.Equals(sextio))
-        //        {
-        //            sextioMinuter.Add(item.PodcastsUrl);
-        //        }
-        //    }
-        //    return sextioMinuter;  //Kanske returna i Loopen och starta timer efter varje return? Borde funka, kanske....
-        //}
+        public void KallaPaAndraPodcastNamn(string oldPodcastNamn, string newPodcastNamn)
+        {
+            podcastRep.AndraPodcastNamn(oldPodcastNamn, newPodcastNamn);
+
+        }
 
         public void UppdateraPodcastForMinIntervallPK(List<string> minutIntervall) //kan användas även för deletea avsnitt för en specifik kategori om man först hämtar ut kategori i annan metod o skickar hit en list av string "kategori""
         {                                                                           //kallar på GetAll för att kunna jämföra varje item i podLista med listan av URL's som vi redan vet är 10min-intervallsPods
@@ -207,29 +191,6 @@ namespace BLL
             podcastRep.Delete2(index);
         }
 
-        //public void HamtaInterVallForAllaPodcasts(string tio, string trettio, string sextio) KANSKE ANVÄNDA DENNA; TROR DOCK EJ
-        //{
-        //    List<Podcast> podcastIntervall = new List<Podcast>();
-        //    List<string> tioMinuter = new List<string>();
-        //    List<string> trettioMinuter = new List<string>();
-        //    List<string> sextioMinuter = new List<string>();
-
-        //    foreach (var item in podcastIntervall)
-        //    {
-        //        if (item.Frekvens.Equals(tio)) 
-        //        {
-        //            tioMinuter.Add(item.PodcastsUrl + " ");
-        //        }
-        //            if (item.Frekvens.Equals(trettio))
-        //            {
-        //                trettioMinuter.Add(item.PodcastsUrl + " ");
-        //            }
-        //                if (item.Frekvens.Equals(sextio))
-        //                {
-        //                    sextioMinuter.Add(item.PodcastsUrl + " ");
-        //                }
-        //    }
-        //}
 
         public void saveChangesPod() {
             podcastRep.SparaAllaAndringar();
@@ -238,7 +199,6 @@ namespace BLL
         public void AnropaDeleteKatOchPod(string sokNamn) {
             podcastRep.DeletePodcastEfterKategori(sokNamn);
         }
-
 
 
 

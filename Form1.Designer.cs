@@ -48,7 +48,6 @@
             this.txtBoxPodcastNamn = new System.Windows.Forms.TextBox();
             this.lblPodcastNamn = new System.Windows.Forms.Label();
             this.btnAndra = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.PodcastListView = new System.Windows.Forms.ListView();
             this.PodcastHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AntalAvsnittHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -168,9 +167,10 @@
             this.lblPodcastAvsnitt.AutoSize = true;
             this.lblPodcastAvsnitt.Location = new System.Drawing.Point(13, 379);
             this.lblPodcastAvsnitt.Name = "lblPodcastAvsnitt";
-            this.lblPodcastAvsnitt.Size = new System.Drawing.Size(88, 13);
+            this.lblPodcastAvsnitt.Size = new System.Drawing.Size(77, 13);
             this.lblPodcastAvsnitt.TabIndex = 13;
-            this.lblPodcastAvsnitt.Text = "lblPodcastAvsnitt";
+            this.lblPodcastAvsnitt.Text = "Podcastavsnitt";
+            this.lblPodcastAvsnitt.Click += new System.EventHandler(this.lblPodcastAvsnitt_Click);
             // 
             // lblKategorier
             // 
@@ -186,9 +186,9 @@
             this.lblAvsnittPresentation.AutoSize = true;
             this.lblAvsnittPresentation.Location = new System.Drawing.Point(587, 372);
             this.lblAvsnittPresentation.Name = "lblAvsnittPresentation";
-            this.lblAvsnittPresentation.Size = new System.Drawing.Size(39, 13);
+            this.lblAvsnittPresentation.Size = new System.Drawing.Size(98, 13);
             this.lblAvsnittPresentation.TabIndex = 15;
-            this.lblAvsnittPresentation.Text = "Avsnitt";
+            this.lblAvsnittPresentation.Text = "Avsnittsbeskrivning";
             // 
             // lblURL
             // 
@@ -243,22 +243,6 @@
             this.btnAndra.Text = "Ändra";
             this.btnAndra.UseVisualStyleBackColor = true;
             this.btnAndra.Click += new System.EventHandler(this.btnAndra_Click);
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.655044F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.07932F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.898336F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.3673F));
-            this.tableLayoutPanel1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(701, 12);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(103, 12);
-            this.tableLayoutPanel1.TabIndex = 23;
             // 
             // PodcastListView
             // 
@@ -363,7 +347,6 @@
             this.Controls.Add(this.btnVisaAllaPods);
             this.Controls.Add(this.listViewAvsnitt);
             this.Controls.Add(this.PodcastListView);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btnAndra);
             this.Controls.Add(this.lblPodcastNamn);
             this.Controls.Add(this.txtBoxPodcastNamn);
@@ -413,7 +396,6 @@
         private System.Windows.Forms.TextBox txtBoxPodcastNamn;
         private System.Windows.Forms.Label lblPodcastNamn;
         private System.Windows.Forms.Button btnAndra;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ListView PodcastListView;
         private System.Windows.Forms.ColumnHeader PodcastHeader;
         private System.Windows.Forms.ColumnHeader AntalAvsnittHeader;

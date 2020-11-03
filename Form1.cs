@@ -351,7 +351,7 @@ namespace Grupp_17
 
             if (intervall == 10) {
                 timer = new System.Timers.Timer();
-                timer.Interval = 6000; //00; 
+                timer.Interval = 600000; 
                 timer.Elapsed += OnTimedEvent10;
                 timer.AutoReset = true;
                 timer.Enabled = true;
@@ -523,6 +523,11 @@ namespace Grupp_17
 
         private void btnAndra_Click(object sender, EventArgs e)
         {
+            string inputURL = txtBoxURL.Text;
+
+            if (inputURL == null) {
+                MessageBox.Show("Vänligen ta bort Podcasten om du vill byta URL.");
+            }
             if (PodcastListView.SelectedIndices.Count <= 0)
             {
                 return;
@@ -534,24 +539,41 @@ namespace Grupp_17
                 {
                     if (cmbKategori.SelectedItem != null)
                     {
-                        if (DialogResult.Yes == MessageBox.Show
-                                ("Vill du ändra kategorin för den här Podcasten? ", "Confirmation",
-                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        if (txtBoxPodcastNamn != null)
                         {
-                            string podcastAttBytaKategori = PodcastListView.Items[valdIndex].Text;
-                            string newKategoriNamn = cmbKategori.SelectedItem.ToString();
-                            Console.WriteLine(podcastAttBytaKategori + newKategoriNamn);
-                            podcastKontroller.KallaPaAndraPodcastKategori(podcastAttBytaKategori, newKategoriNamn);
-                            ClearAndReload();
+                            if (CmbUpdateFrekvens != null)
+                            {
+                                if (DialogResult.Yes == MessageBox.Show
+                                        ("Vill du ändra podcastnamn, kategori & frekvens för den här Podcasten? ", "Confirmation",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                                {
+                                    string podcastNamn = PodcastListView.Items[valdIndex].Text;
+
+                                    string newKategoriNamn = cmbKategori.SelectedItem.ToString();
+                                    string newFrekvens = CmbUpdateFrekvens.SelectedItem.ToString();
+                                    string newPodcastNamn = txtBoxPodcastNamn.Text;
+
+                                    podcastKontroller.KallaPaAndraPodcastKategori(podcastNamn, newKategoriNamn);    //<<<<---- här får podcasten en ny kategori
+                                    podcastKontroller.KallaPaAndraPodcastFrekvens(podcastNamn, newFrekvens);        //<<<<---- här får podcast en ny frekvens
+                                    podcastKontroller.KallaPaAndraPodcastNamn(podcastNamn, newPodcastNamn);         //<<<<---- här får podcast ett nytt Namn
+
+                                    Console.WriteLine(podcastNamn + "   " + newPodcastNamn + "  " + newKategoriNamn + "   " + newFrekvens);
+
+                                    ClearAndReload();
+                                }
+                            }
                         }
                     }
                 }
+                else {
+                    MessageBox.Show("Vänligen ändra både podcastnamn, kategori & frekvens");
+                }
             }
-            catch (ArgumentOutOfRangeException ex) {
+            catch (ArgumentOutOfRangeException ex)
+            {
                 Console.WriteLine(ex);
             }
-
-            }
+        }
 
         private void listView1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
@@ -559,6 +581,11 @@ namespace Grupp_17
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPodcastAvsnitt_Click(object sender, EventArgs e)
         {
 
         }

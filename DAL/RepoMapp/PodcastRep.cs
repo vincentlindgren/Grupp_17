@@ -68,6 +68,38 @@ namespace DAL.RepoMapp
             }
         }
 
+        public void AndraPodcastFrekvens(string podcastNamn, string newFrekvens)
+        {
+            podLista = GetAll();
+
+            foreach (var item in podLista)
+            {
+                if (item.PodcastsNamn.Equals(podcastNamn))
+                {
+                    item.Frekvens = "";
+                    item.Frekvens = newFrekvens;
+                    Console.WriteLine(item.PodcastsKategori);
+                    SparaAllaAndringar();
+                }
+            }
+        }
+
+        public void AndraPodcastNamn(string oldPodcastNamn, string newPodcastNamn)
+        {
+            podLista = GetAll();
+
+            foreach (var item in podLista)
+            {
+                if (item.PodcastsNamn.Equals(oldPodcastNamn))
+                {
+                    item.PodcastsNamn = "";
+                    item.PodcastsNamn = newPodcastNamn;
+                    Console.WriteLine(item.PodcastsNamn);
+                    SparaAllaAndringar();
+                }
+            }
+        }
+
         public void SparaAllaAndringar()
         {
             dataSerializer.Serialize(podLista);
