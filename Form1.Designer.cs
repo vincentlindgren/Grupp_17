@@ -42,7 +42,6 @@
             this.lblPodcastAvsnitt = new System.Windows.Forms.Label();
             this.lblKategorier = new System.Windows.Forms.Label();
             this.lblAvsnittPresentation = new System.Windows.Forms.Label();
-            this.txtBoxValdAvsnitt = new System.Windows.Forms.TextBox();
             this.lblURL = new System.Windows.Forms.Label();
             this.lblUpdtFrekvens = new System.Windows.Forms.Label();
             this.lblKategoriCmb = new System.Windows.Forms.Label();
@@ -59,6 +58,8 @@
             this.AvsnittsNummer = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.AvsnittsNamn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnVisaAllaPods = new System.Windows.Forms.Button();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.lvBeskrivning = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // CmbUpdateFrekvens
@@ -188,15 +189,6 @@
             this.lblAvsnittPresentation.TabIndex = 15;
             this.lblAvsnittPresentation.Text = "Avsnitt";
             // 
-            // txtBoxValdAvsnitt
-            // 
-            this.txtBoxValdAvsnitt.Location = new System.Drawing.Point(589, 398);
-            this.txtBoxValdAvsnitt.Multiline = true;
-            this.txtBoxValdAvsnitt.Name = "txtBoxValdAvsnitt";
-            this.txtBoxValdAvsnitt.ReadOnly = true;
-            this.txtBoxValdAvsnitt.Size = new System.Drawing.Size(326, 173);
-            this.txtBoxValdAvsnitt.TabIndex = 16;
-            // 
             // lblURL
             // 
             this.lblURL.AutoSize = true;
@@ -249,6 +241,7 @@
             this.btnAndra.TabIndex = 22;
             this.btnAndra.Text = "Ändra";
             this.btnAndra.UseVisualStyleBackColor = true;
+            this.btnAndra.Click += new System.EventHandler(this.btnAndra_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -309,8 +302,8 @@
             // listViewAvsnitt
             // 
             this.listViewAvsnitt.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.AvsnittsNummer,
-            this.AvsnittsNamn});
+            this.AvsnittsNamn,
+            this.AvsnittsNummer});
             this.listViewAvsnitt.HideSelection = false;
             this.listViewAvsnitt.Location = new System.Drawing.Point(16, 398);
             this.listViewAvsnitt.Name = "listViewAvsnitt";
@@ -322,11 +315,13 @@
             // 
             // AvsnittsNummer
             // 
+            this.AvsnittsNummer.DisplayIndex = 0;
             this.AvsnittsNummer.Text = "Avsnittsnummer";
             this.AvsnittsNummer.Width = 90;
             // 
             // AvsnittsNamn
             // 
+            this.AvsnittsNamn.DisplayIndex = 1;
             this.AvsnittsNamn.Text = "Avsnitssnamn";
             this.AvsnittsNamn.Width = 385;
             // 
@@ -340,11 +335,30 @@
             this.btnVisaAllaPods.UseVisualStyleBackColor = true;
             this.btnVisaAllaPods.Click += new System.EventHandler(this.btnVisaAllaPods_Click);
             // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvBeskrivning});
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(589, 398);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(328, 173);
+            this.listView1.TabIndex = 26;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged_1);
+            // 
+            // lvBeskrivning
+            // 
+            this.lvBeskrivning.Text = "Avsnittsbeskrivning";
+            this.lvBeskrivning.Width = 300;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 583);
+            this.Controls.Add(this.listView1);
             this.Controls.Add(this.btnVisaAllaPods);
             this.Controls.Add(this.listViewAvsnitt);
             this.Controls.Add(this.PodcastListView);
@@ -355,7 +369,6 @@
             this.Controls.Add(this.lblKategoriCmb);
             this.Controls.Add(this.lblUpdtFrekvens);
             this.Controls.Add(this.lblURL);
-            this.Controls.Add(this.txtBoxValdAvsnitt);
             this.Controls.Add(this.lblAvsnittPresentation);
             this.Controls.Add(this.lblKategorier);
             this.Controls.Add(this.lblPodcastAvsnitt);
@@ -392,7 +405,6 @@
         private System.Windows.Forms.Label lblPodcastAvsnitt;
         private System.Windows.Forms.Label lblKategorier;
         private System.Windows.Forms.Label lblAvsnittPresentation;
-        private System.Windows.Forms.TextBox txtBoxValdAvsnitt;
         private System.Windows.Forms.Label lblURL;
         private System.Windows.Forms.Label lblUpdtFrekvens;
         private System.Windows.Forms.Label lblKategoriCmb;
@@ -410,6 +422,8 @@
         private System.Windows.Forms.ColumnHeader AvsnittsNummer;
         private System.Windows.Forms.ColumnHeader AvsnittsNamn;
         private System.Windows.Forms.Button btnVisaAllaPods;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader lvBeskrivning;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL.RepoMapp
 {
@@ -52,7 +53,22 @@ namespace DAL.RepoMapp
                 }
             }
         }
+        
+        public void AndraPodcastKategori(string podcastNamn, string newKategori) {
+            podLista = GetAll();
 
+            foreach (var item in podLista)
+            {
+                if (item.PodcastsNamn.Equals(podcastNamn)) {
+                    //string attByta = item.PodcastsKategori;
+                    //var replacement = attByta.Replace(attByta, newKategori);
+                    item.PodcastsKategori = "";
+                    item.PodcastsKategori = newKategori;
+                    Console.WriteLine(item.PodcastsKategori);
+                    SparaAllaAndringar();
+                }
+            }
+        }
 
         public void SparaAllaAndringar()
         {
@@ -93,17 +109,18 @@ namespace DAL.RepoMapp
 
         public int ReturnAntalAvsnitt(string namn)
         {
-            List<Podcast> podLista = GetAll();
-            int returneraAntalAvsnitt = 0;
+            podLista = GetAll();
+            Podcast podItem = new Podcast(); 
             foreach (var item in podLista)
             {
                 if (item.PodcastsNamn.Equals(namn))
                 {
-                    returneraAntalAvsnitt = item.AntalAvsnitt;
+                    podItem = item;
                     break;
                 }
             }
-            return returneraAntalAvsnitt;
+            int antal = podItem.AntalAvsnitt;
+            return antal;
         }
 
         public void DeletePodcastEfterKategori(string sokKategori)

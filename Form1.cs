@@ -100,7 +100,7 @@ namespace Grupp_17
 
                         await podcastKontroller.SkapaListForEnskildPodcastAsync(podcastNamn, inputURL, kategori, frekvens);
 
-                        ListViewItem item1 = new ListViewItem(podcastNamn); 
+                        ListViewItem item1 = new ListViewItem(podcastNamn);
                         item1.SubItems.Add(antalAvsnitt.ToString());
                         item1.SubItems.Add(frekvens);
                         item1.SubItems.Add(kategori);
@@ -119,7 +119,7 @@ namespace Grupp_17
 
 
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e) 
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PodcastListView.SelectedIndices.Count <= 0)
             {
@@ -130,7 +130,7 @@ namespace Grupp_17
             if (valdIndex >= 0)
             {
                 string text = PodcastListView.Items[valdIndex].Text;
-                List<Avsnitt> avsnittLista = avsnittKontroller.HamtaAvsnittForPodcast(text); 
+                List<Avsnitt> avsnittLista = avsnittKontroller.HamtaAvsnittForPodcast(text);
                 try
                 {
                     listViewAvsnitt.Items.Clear();
@@ -138,7 +138,7 @@ namespace Grupp_17
 
                     foreach (var item in avsnittLista) {
                         avsnittsnummer = avsnittsnummer - 1;
-                        ListViewItem avsnittItem = new ListViewItem(new[] { avsnittsnummer.ToString(), item.AvsnittsNummer }); ;
+                        ListViewItem avsnittItem = new ListViewItem(new[] { item.AvsnittsNummer, avsnittsnummer.ToString() }); ;
                         listViewAvsnitt.Items.Add(avsnittItem);
                     }
                 }
@@ -147,7 +147,6 @@ namespace Grupp_17
                     Console.WriteLine(skrivException);
                 }
             }
-            
         }
 
         public void VisaPodcastsIListView()
@@ -189,38 +188,67 @@ namespace Grupp_17
 
 
         private void btnSparaKategori_Click(object sender, EventArgs e)
-        {
+        { if (PodcastListView.SelectedIndices.Count <= 0)
             {
-                Boolean selected = true;
-                var text = textBox2.Text;
-                if (listBoxKategorier.SelectedItems.Count > 0)
-                {
-                    if (string.IsNullOrEmpty(text))
-                    {
-                        MessageBox.Show("Textfältet är tomt!");
-                    }
-
-                    if (selected)
-                    {
-                        int selectedIndex = listBoxKategorier.SelectedIndex;
-                        listBoxKategorier.Items.RemoveAt(selectedIndex);
-                        listBoxKategorier.Items.Insert(selectedIndex, textBox2.Text);
-                        listBoxKategorier.ResetText();
-                        cmbKategori.Items.RemoveAt(selectedIndex);
-                        cmbKategori.Items.Insert(selectedIndex, textBox2.Text);
-                        cmbKategori.ResetText();
-                    }
-                    textBox2.Clear();
-                    MessageBox.Show("Du har nu ändrat kategorins namn!", "Kategorin", MessageBoxButtons.OK);
-                }
-                else
-                {
-                    MessageBox.Show("du måste välja en kategori");
-                }
+                return;
             }
-        }
+            int valdIndex = PodcastListView.SelectedIndices[0];
+            try
+            {
+                if (valdIndex >= 0)
+                {
+                    if (cmbKategori.SelectedItem != null)
+                    {
+                        if (DialogResult.Yes == MessageBox.Show
+                                ("Vill du ändra kategorin för den här Podcasten? ", "Confirmation",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        {
+                            string podcastAttBytaKategori = PodcastListView.Items[valdIndex].Text;
+                            string newKategoriNamn = cmbKategori.SelectedItem.ToString();
+                             Console.WriteLine(podcastAttBytaKategori + newKategoriNamn);
+                            podcastKontroller.KallaPaAndraPodcastKategori(podcastAttBytaKategori, newKategoriNamn);
+                            ClearAndReload();
+                        }
+                }
+                    }
+            }
+            catch (ArgumentOutOfRangeException ex)
+{
+    Console.WriteLine(ex);
+}
 
-        public void fyllKategorier() { 
+            }
+            //{
+            //    Boolean selected = true;
+            //    var text = textBox2.Text;
+            //    if (listBoxKategorier.SelectedItems.Count > 0)
+            //    {
+            //        if (string.IsNullOrEmpty(text))
+            //        {
+            //            MessageBox.Show("Textfältet är tomt!");
+            //        }
+
+            //        if (selected)
+            //        {
+            //            int selectedIndex = listBoxKategorier.SelectedIndex;
+            //            listBoxKategorier.Items.RemoveAt(selectedIndex);
+            //            listBoxKategorier.Items.Insert(selectedIndex, textBox2.Text);
+            //            listBoxKategorier.ResetText();
+            //            cmbKategori.Items.RemoveAt(selectedIndex);
+            //            cmbKategori.Items.Insert(selectedIndex, textBox2.Text);
+            //            cmbKategori.ResetText();
+            //        }
+            //        textBox2.Clear();
+            //        MessageBox.Show("Du har nu ändrat kategorins namn!", "Kategorin", MessageBoxButtons.OK);
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("du måste välja en kategori");
+            //    }
+            //}
+        //}
+
+        public void fyllKategorier() {
             try
             {
                 List<PodKategori> listaSomReturneras = kategoriKontroller.GetAllKategorier();
@@ -248,10 +276,53 @@ namespace Grupp_17
 
         }
 
-        private void listViewAvsnitt_SelectedIndexChanged(object sender, EventArgs e)
+        private void listViewAvsnitt_SelectedIndexChanged(object sender, EventArgs e) //Fixa listviewAvsnittsBeskrivning
         {
+            
+                if (PodcastListView.SelectedIndices.Count <= 0)
+                {
+                    return;
+                }
+                if (listViewAvsnitt.SelectedIndices.Count <= 0)
+                {
+                    return;
+                }
+                int valdIndex = PodcastListView.SelectedIndices[0];
 
-        }
+                if (valdIndex >= 0)
+                {
+                    int valdIndex2 = listViewAvsnitt.SelectedIndices[0];
+                    if (valdIndex2 >= 0)
+                    {
+                        string text = PodcastListView.Items[valdIndex].Text;
+                        List<Avsnitt> avsnittLista = avsnittKontroller.HamtaAvsnittForPodcast(text);
+
+                    string avsnittsNummer = listViewAvsnitt.SelectedItems[0].Text;
+                    try
+                        {
+                        foreach (var item in avsnittLista)
+                            {
+                            if (item.AvsnittsNummer.Equals(avsnittsNummer))
+                            {
+                                Console.WriteLine(item.AvsnittsNummer.ToString());
+                                ListViewItem avsnittItem = new ListViewItem(new[] { item.AvsnittsNamn });
+                                listView1.Items.Clear();
+                                listView1.Items.Add(avsnittItem);
+
+                                //ListViewItem avsnittItem = new ListViewItem(new[] { item.AvsnittsNamn });
+                                ////ListViewItem avsnittItem = new ListViewItem(new[] { item.AvsnittsNamn }); ;
+                                //lvBeskrivning.Items.Clear();
+                                //lvBeskrivning.Items.Add(avsnittItem);
+                            }
+                        }
+                        }
+                        catch (ArgumentOutOfRangeException skrivException)
+                        {
+                            Console.WriteLine(skrivException);
+                        }
+                    }
+                }
+            }
 
         private void cmbKategori_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -295,7 +366,7 @@ namespace Grupp_17
 
         private void StartaTimer(int intervall)
         {
-            
+
             if (intervall == 10) {
                 timer = new System.Timers.Timer();
                 timer.Interval = 6000; //00; 
@@ -304,16 +375,16 @@ namespace Grupp_17
                 timer.Enabled = true;
                 Console.WriteLine(intervall.ToString());
             }
-             
+
             else if (intervall == 30)
-                {
-                    timer = new System.Timers.Timer();
-                timer.Interval = 1800000; 
-                    timer.Elapsed += OnTimedEvent30;
-                    timer.AutoReset = true;
-                    timer.Enabled = true;
-                    Console.WriteLine(intervall.ToString());
-                }
+            {
+                timer = new System.Timers.Timer();
+                timer.Interval = 1800000;
+                timer.Elapsed += OnTimedEvent30;
+                timer.AutoReset = true;
+                timer.Enabled = true;
+                Console.WriteLine(intervall.ToString());
+            }
             else if (intervall == 60) {
                 timer = new System.Timers.Timer();
                 timer.Interval = 3600000;
@@ -336,6 +407,7 @@ namespace Grupp_17
             podcastKontroller.UppdateraPodcastForMinIntervallPK(trettioMinList);
             Console.WriteLine("8 sekunder har gått: trettioMinList");
         }
+
         private void OnTimedEvent60(Object source, System.Timers.ElapsedEventArgs e)
         {
             List<string> sextioMinList = podcastKontroller.HamtaPodcastsForMinuter("60");
@@ -410,9 +482,6 @@ namespace Grupp_17
                 return;
             }
             ClearAndReload();
-
-
-
         }
 
         private void btnNy_Click(object sender, EventArgs e)
@@ -430,7 +499,7 @@ namespace Grupp_17
             try
             {
                 if (valdIndex >= 0)
-            {
+                {
                     if (DialogResult.Yes == MessageBox.Show
                       ("Vill du ta bort kategorin och alla Podcasts i kategorin?", "Confirmation",
                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
@@ -440,14 +509,14 @@ namespace Grupp_17
 
                         podcastKontroller.AnropaDeleteKatOchPod(kategoriAttTaBort);
                         kategoriKontroller.DeletePoddcastAtKategoriCompare(kategoriAttTaBort);
-                
+
                         listBoxKategorier.ClearSelected();
-            }
-                }
-                    else
-                    {
-                    MessageBox.Show("Försök igen. Vänligen välj en kategori att ta bort");
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Försök igen. Vänligen välj en kategori att ta bort");
+                }
             }
             catch (Exception excep)
             {
@@ -457,7 +526,7 @@ namespace Grupp_17
             podcastKontroller.saveChangesPod();
             ClearAndReload();
         }
-        
+
 
         public void ClearAndReload() {
             listBoxKategorier.ClearSelected();
@@ -467,7 +536,44 @@ namespace Grupp_17
             cmbKategori.Text = "";
             VisaPodcastsIListView();
             fyllKategorier();
-            
+
+        }
+
+        private void btnAndra_Click(object sender, EventArgs e)
+        {
+            if (PodcastListView.SelectedIndices.Count <= 0)
+            {
+                return;
+            }
+            int valdIndex = PodcastListView.SelectedIndices[0];
+            try
+            {
+                if (valdIndex >= 0)
+                {
+                    if (cmbKategori.SelectedItem != null)
+                    {
+                        if (DialogResult.Yes == MessageBox.Show
+                                ("Vill du ändra kategorin för den här Podcasten? ", "Confirmation",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        {
+                            string podcastAttBytaKategori = PodcastListView.Items[valdIndex].Text;
+                            string newKategoriNamn = cmbKategori.SelectedItem.ToString();
+                            Console.WriteLine(podcastAttBytaKategori + newKategoriNamn);
+                            podcastKontroller.KallaPaAndraPodcastKategori(podcastAttBytaKategori, newKategoriNamn);
+                            ClearAndReload();
+                        }
+                    }
+                }
+            }
+            catch (ArgumentOutOfRangeException ex) {
+                Console.WriteLine(ex);
+            }
+
+            }
+
+        private void listView1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

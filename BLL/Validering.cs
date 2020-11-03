@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class Validering
+    public class Validering : AnvandarException
     {
         public Validering()
         {
@@ -16,13 +16,16 @@ namespace BLL
 
         }
 
-        public bool ValdFrekvens(string frekvens)
+        public override bool ValdFrekvens(string frekvens)
         {
             bool korrektFrekvens = Int32.TryParse(frekvens, out int frekvensArVald);
             if (!korrektFrekvens)
             {
                 throw new AnvandarException("Ingen frekvens är vald");
-
+            }
+            else
+            {
+                Console.WriteLine("LYCKADES");
             }
             return korrektFrekvens;
         }

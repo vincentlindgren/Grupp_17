@@ -15,5 +15,19 @@ namespace BLL
         public AnvandarException() { 
             
         }
+
+        public virtual bool ValdFrekvens(string frekvens)
+        {
+
+            bool korrektFrekvens = Int32.TryParse(frekvens, out int frekvensArVald);
+            if (!korrektFrekvens)
+            {
+                throw new AnvandarException("Ingen frekvens");
+
+            }
+
+            return korrektFrekvens;
+        }
     }
 }
+

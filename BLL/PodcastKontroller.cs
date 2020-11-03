@@ -118,7 +118,10 @@ namespace BLL
             {
             }
             return minuter;  //Kanske returna i Loopen och starta timer efter varje return? Borde funka, kanske....
+        }
 
+        public void KallaPaAndraPodcastKategori(string podcastNamn, string newKategori) {
+            podcastRep.AndraPodcastKategori(podcastNamn, newKategori);
         }
 
         //public List<String> HamtaPodcastsForTrettioMinuter(string trettio)
@@ -230,6 +233,9 @@ namespace BLL
         public void AnropaDeleteKatOchPod(string sokNamn) {
             podcastRep.DeletePodcastEfterKategori(sokNamn);
         }
+
+
+
 
         //Exempel på virtual nedanför
         public override void KontrollerMetod()

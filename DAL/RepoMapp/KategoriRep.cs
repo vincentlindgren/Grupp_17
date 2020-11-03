@@ -80,6 +80,6 @@ namespace DAL.RepoMapp
             return podKatLista[index].KategoriNamn;
         }
 
-
+        
     }
 }
