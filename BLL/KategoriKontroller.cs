@@ -85,6 +85,11 @@ namespace BLL
        
         }
 
+        public void KallaPaAndraKategoriNamn(string oldKategoriNamn, string newKategoriNamn) {
+           KategoriRep.AndraPodcastKategori(oldKategoriNamn, newKategoriNamn);
+        }
+
+
         public void AnropaSparaKategoriLista() {
             KategoriRep.SparaAllaAndringar();
         }

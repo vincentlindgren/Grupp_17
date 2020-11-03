@@ -60,8 +60,6 @@ namespace DAL.RepoMapp
             foreach (var item in podLista)
             {
                 if (item.PodcastsNamn.Equals(podcastNamn)) {
-                    //string attByta = item.PodcastsKategori;
-                    //var replacement = attByta.Replace(attByta, newKategori);
                     item.PodcastsKategori = "";
                     item.PodcastsKategori = newKategori;
                     Console.WriteLine(item.PodcastsKategori);

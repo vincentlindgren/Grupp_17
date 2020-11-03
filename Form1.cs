@@ -153,7 +153,7 @@ namespace Grupp_17
         {
             try
             {
-                List<Podcast> podcastsSomLaddas = podcastRep.GetAll(); //Fixa metod i PodcastKontroller som hämtar GetAll() från podcastRep DAL.
+                List<Podcast> podcastsSomLaddas = podcastRep.GetAll(); 
 
                 foreach (var pod in podcastsSomLaddas)
                 {
@@ -188,65 +188,47 @@ namespace Grupp_17
 
 
         private void btnSparaKategori_Click(object sender, EventArgs e)
-        { if (PodcastListView.SelectedIndices.Count <= 0)
+        { 
+            if (listBoxKategorier.SelectedIndices.Count <= 0)
             {
                 return;
             }
-            int valdIndex = PodcastListView.SelectedIndices[0];
+            int valdIndex = listBoxKategorier.SelectedIndices[0];
             try
             {
                 if (valdIndex >= 0)
                 {
-                    if (cmbKategori.SelectedItem != null)
+                    if (listBoxKategorier.SelectedItem != null)
                     {
                         if (DialogResult.Yes == MessageBox.Show
-                                ("Vill du ändra kategorin för den här Podcasten? ", "Confirmation",
+                                ("Vill du ändra namn för den här kategorin och tillhörande Podcasts? ", "Confirmation",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                         {
-                            string podcastAttBytaKategori = PodcastListView.Items[valdIndex].Text;
-                            string newKategoriNamn = cmbKategori.SelectedItem.ToString();
-                             Console.WriteLine(podcastAttBytaKategori + newKategoriNamn);
-                            podcastKontroller.KallaPaAndraPodcastKategori(podcastAttBytaKategori, newKategoriNamn);
+                            
+                            string oldKategoriNamn = listBoxKategorier.Items[valdIndex].ToString();
+                            string newKategoriNamn = textBox2.Text;
+                            
+                            List<Podcast> podListaForKategori = kategoriKontroller.SokPodcastEfterPodcastKategori(oldKategoriNamn);
+                            
+                            foreach (var item in podListaForKategori)
+                            {
+                                    podcastKontroller.KallaPaAndraPodcastKategori(item.PodcastsNamn, newKategoriNamn);
+                                    Console.WriteLine(item.PodcastsNamn + "  " + oldKategoriNamn + "   " + newKategoriNamn);
+                            }
+                            kategoriKontroller.KallaPaAndraKategoriNamn(oldKategoriNamn, newKategoriNamn); /*<<<-----FUNGERAR SOM DEN SKA*/
+                            
                             ClearAndReload();
                         }
-                }
                     }
+                }
             }
             catch (ArgumentOutOfRangeException ex)
-{
-    Console.WriteLine(ex);
-}
-
+                {
+                    Console.WriteLine(ex);
             }
-            //{
-            //    Boolean selected = true;
-            //    var text = textBox2.Text;
-            //    if (listBoxKategorier.SelectedItems.Count > 0)
-            //    {
-            //        if (string.IsNullOrEmpty(text))
-            //        {
-            //            MessageBox.Show("Textfältet är tomt!");
-            //        }
 
-            //        if (selected)
-            //        {
-            //            int selectedIndex = listBoxKategorier.SelectedIndex;
-            //            listBoxKategorier.Items.RemoveAt(selectedIndex);
-            //            listBoxKategorier.Items.Insert(selectedIndex, textBox2.Text);
-            //            listBoxKategorier.ResetText();
-            //            cmbKategori.Items.RemoveAt(selectedIndex);
-            //            cmbKategori.Items.Insert(selectedIndex, textBox2.Text);
-            //            cmbKategori.ResetText();
-            //        }
-            //        textBox2.Clear();
-            //        MessageBox.Show("Du har nu ändrat kategorins namn!", "Kategorin", MessageBoxButtons.OK);
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("du måste välja en kategori");
-            //    }
-            //}
-        //}
+        }
+            
 
         public void fyllKategorier() {
             try
@@ -572,6 +554,11 @@ namespace Grupp_17
             }
 
         private void listView1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }

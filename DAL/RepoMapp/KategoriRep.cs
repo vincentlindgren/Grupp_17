@@ -14,7 +14,7 @@ namespace DAL.RepoMapp
             dataSerializer = new DataSerializer();
             podKatLista = new List<PodKategori>();
             podKatLista  = GetAll();
-
+            
         }
 
  
@@ -80,6 +80,19 @@ namespace DAL.RepoMapp
             return podKatLista[index].KategoriNamn;
         }
 
-        
+        public void AndraPodcastKategori(string oldKategoriNamn, string newKategoriNamn)
+        {
+            podKatLista = GetAll();
+            foreach (var item in podKatLista)
+            {
+                if (item.KategoriNamn.Equals(oldKategoriNamn))
+                {
+                    item.KategoriNamn = "";
+                    item.KategoriNamn = newKategoriNamn;
+                    Console.WriteLine(item.KategoriNamn);
+                    SparaAllaAndringar();
+                }
+            }
+        }
     }
 }

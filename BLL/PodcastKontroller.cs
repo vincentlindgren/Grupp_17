@@ -51,6 +51,11 @@ namespace BLL
             return podUrlAttReturnera;
         }
 
+        public List<Podcast> KallaPaGetAll() {
+            List<Podcast> podcastLista = podcastRep.GetAll();
+            return podcastLista;
+        }
+
         public async Task SkapaListForEnskildPodcastAsync(string podcastNamn, string podcastURL, string podcastKategori, string frekvens)
         {
 
