@@ -58,27 +58,7 @@ namespace DAL.RepoMapp
         }
 
 
-        public PodKategori SokKategoriEfterNamn(string sokNamn)
-        { //Denna metod kan användas till byte av PodcastNamn med små modifieringar. Ta in sokNamn och newName. Kalla på SparaAllaAndringar();
-
-            PodKategori katListReturneras = new PodKategori();
-            List<PodKategori> katLista = GetAll();
-
-            foreach (var item in katLista)
-            {
-                if (item.KategoriNamn.Equals(sokNamn))
-                {
-                    katListReturneras = item;
-                    break;
-                }
-            }
-            return katListReturneras;
-        }
-
-        public string HamtaNamn(int index)
-        {
-            return podKatLista[index].KategoriNamn;
-        }
+        
 
         public void AndraPodcastKategori(string oldKategoriNamn, string newKategoriNamn)
         {

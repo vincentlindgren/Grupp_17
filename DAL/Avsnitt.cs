@@ -14,12 +14,11 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace DAL
 {
-    public class Avsnitt //Döp om klassen till mer beskrivande för funktionen
+    public class Avsnitt 
     {
-        public string AvsnittsNummer { get; set; }
-        public string AvsnittsNamn { get; set; }
+        public string AvsnittsNummer { get; set; }       //Detta är egentligen "Avsnitts TITEL / RUBRIK"
+        public string AvsnittsNamn { get; set; }         //Detta är egentligen "Avsnitts BESKRIVNING"
 
-        public MyXMLSerializer mySerializerObj { get; set; }
 
 
         public Avsnitt(string ett, string tva)
@@ -30,51 +29,9 @@ namespace DAL
 
         public Avsnitt()
         {
-            mySerializerObj = new MyXMLSerializer();
+            
         }
 
-        //public List<Avsnitt> TestaRSS(string inputURL, string podcastNamn) //Döp om metodnamn till annat än TESTARSS LOL
-        //{
-        //    try
-        //    {
-        //        XmlReader reader = XmlReader.Create(inputURL); 
-        //        SyndicationFeed feed = SyndicationFeed.Load(reader);
-
-        //        Console.WriteLine("--- Title ---" + feed.Title.Text);
-        //        Console.WriteLine("--- Description ---" + feed.Description.Text);
-        //        Console.WriteLine();
-
-        //        List<Avsnitt> avsnittLista = new List<Avsnitt>();
-
-        //        foreach (var item in feed.Items)
-        //        {
-
-        //            avsnittLista.Add(new Avsnitt(item.Title.Text, item.Summary.Text));
-
-        //            Console.WriteLine(item.Title.Text);
-        //            Console.WriteLine("-> " + item.Summary.Text);
-        //            Console.WriteLine();
-        //        }
-        //        return avsnittLista; //Se till att när denna metod kallas på att den returnerade List<Avsnitt> faktiskt skickas till Serialize-metoden
-        //    }
-        //    catch (Exception e) {
-        //        Console.WriteLine(e);
-        //        throw;
-        //    }
-        //}
-
-        ////public List<Avsnitt> HamtaAvsnittForV
-
-        //public string hamtaPodcastNamn(string inputURL) { 
-        //    //Läser RSS-feeden och returnerar podcastens titel som sträng.
-        //    //Används för att sätta default - namn om användaren inte själv namnsätter podcasten.
-
-        //    XmlReader reader = XmlReader.Create(inputURL); 
-        //    SyndicationFeed feed = SyndicationFeed.Load(reader);
-
-        //    string namnAttReturnera = feed.Title.Text;
-        //    return namnAttReturnera;
-        //}
     }
 }
     

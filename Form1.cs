@@ -29,8 +29,6 @@ namespace Grupp_17
     public partial class Form1 : Form
     {
 
-        //Avsnitt avsnitt = new Avsnitt();
-        public BLL1 bll1Objekt { get; set; } //ANVÄNDS EJ
         public Podcast podcastObj { get; set; }
 
         AvsnittKontroller avsnittKontroller = new AvsnittKontroller();
@@ -258,7 +256,7 @@ namespace Grupp_17
 
         }
 
-        private void listViewAvsnitt_SelectedIndexChanged(object sender, EventArgs e) //Fixa listviewAvsnittsBeskrivning
+        private void listViewAvsnitt_SelectedIndexChanged(object sender, EventArgs e) 
         {
             
                 if (PodcastListView.SelectedIndices.Count <= 0)
@@ -290,11 +288,6 @@ namespace Grupp_17
                                 ListViewItem avsnittItem = new ListViewItem(new[] { item.AvsnittsNamn });
                                 listView1.Items.Clear();
                                 listView1.Items.Add(avsnittItem);
-
-                                //ListViewItem avsnittItem = new ListViewItem(new[] { item.AvsnittsNamn });
-                                ////ListViewItem avsnittItem = new ListViewItem(new[] { item.AvsnittsNamn }); ;
-                                //lvBeskrivning.Items.Clear();
-                                //lvBeskrivning.Items.Add(avsnittItem);
                             }
                         }
                         }
@@ -398,6 +391,10 @@ namespace Grupp_17
 
         private void btnTaBort_Click(object sender, EventArgs e)
         {
+            if (PodcastListView.SelectedIndices.Count <= 0)
+            {
+                return;
+            }
             int valdIndex = PodcastListView.SelectedIndices[0];
             try
             {

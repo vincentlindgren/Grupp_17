@@ -36,20 +36,5 @@ namespace DAL
             
 
         }
-
-        //public class VisualPodcast : IPodcast {
-
-        //    public void Play() { //om objektet är en "VisualPodcast" kommer denna metod att anropas
-        //                                  //Detta används för att man ska kunna trycka på play oavsett vilken 
-
-        //        List<IPodcast> pList = new List<IPodcast>();
-        //        pList.Add(new Podcast());
-        //        pList.Add(new VisualPodcast());
-
-        //        foreach (var item in pList) {
-        //            item.Play();
-        //        }
-
-        //    }
     }
 }

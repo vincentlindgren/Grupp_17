@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class Validering : AnvandarException
+    public class Validering : AnvandarException //Virtual/Override
     {
         public Validering()
         {
@@ -16,7 +16,7 @@ namespace BLL
 
         }
 
-        public override bool ValdFrekvens(string frekvens)
+        public override bool ValdFrekvens(string frekvens) //Virtual/Override
         {
             bool korrektFrekvens = Int32.TryParse(frekvens, out int frekvensArVald);
             if (!korrektFrekvens)
@@ -32,9 +32,9 @@ namespace BLL
 
         public bool KorrektURLAdress(string urlAdress)
         {
-            Uri uriResult;
-            bool korrektURL = Uri.TryCreate(urlAdress, UriKind.Absolute, out uriResult)
-                           && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+            Uri uriResultat;
+            bool korrektURL = Uri.TryCreate(urlAdress, UriKind.Absolute, out uriResultat)
+                           && (uriResultat.Scheme == Uri.UriSchemeHttp || uriResultat.Scheme == Uri.UriSchemeHttps);
             if (!korrektURL)
             {
                 throw new AnvandarException("URLadressen är inte korrekt");
@@ -53,18 +53,5 @@ namespace BLL
             }
             return korrektKategori;
         }
-
-        //public bool ValdKategori(string kategorinamn)
-        //{
-        //    bool isNull = false;
-        //    string inKategori = kategorinamn;
-
-        //    if (string.IsNullOrEmpty(inKategori)) {
-        //        isNull = true;
-        //        throw new AnvandarException("Ingen kategori är vald");
-        //    }
-        //    return isNull;
-        //}
-
     }
 }

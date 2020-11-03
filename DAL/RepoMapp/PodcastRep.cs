@@ -30,12 +30,12 @@ namespace DAL.RepoMapp
         public void Delete2(int index)
         {
             podLista.RemoveAt(index);
-            //SparaAllaAndringar();
+            
         }
 
         public void Delete(int index)
         {
-            //podLista.RemoveAt(index);
+            
             List<Podcast> nyLista = GetAll();
             nyLista.RemoveAt(index);
             podLista = nyLista;
@@ -162,29 +162,12 @@ namespace DAL.RepoMapp
             }
         }
 
-        public List<Podcast> SokPodcastEfterKategori(string sokKategori)
-        { //ska kallas på när man väljer kategori från cmb samt när man delete'ar alla podcasts i en kategori
-            List<Podcast> sokPodcastsForKategoriList = new List<Podcast>();
-            List<Podcast> podLista = GetAll();
-
-            foreach (var item in podLista)
-            {
-                if (item.PodcastsKategori.Equals(sokKategori))
-                {
-                    sokPodcastsForKategoriList.Add(item);
-                }
-            }
-            return sokPodcastsForKategoriList;
-        }
+       
 
         public string HamtaNamn(int index)
         {
             return podLista[index].PodcastsNamn;
         }
 
-        public string HamtaURL(int index)
-        {
-            return podLista[index].PodcastsUrl;
-        }
     }
 }

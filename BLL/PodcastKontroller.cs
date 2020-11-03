@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 
 namespace BLL
 {
-    public class PodcastKontroller : KontrollerKlass
+    public class PodcastKontroller 
     {
         AvsnittKontroller avsnittKontroller = new AvsnittKontroller();
 
@@ -51,7 +51,8 @@ namespace BLL
             return podUrlAttReturnera;
         }
 
-        public List<Podcast> KallaPaGetAll() {
+        public List<Podcast> KallaPaGetAll()
+        {
             List<Podcast> podcastLista = podcastRep.GetAll();
             return podcastLista;
         }
@@ -125,14 +126,15 @@ namespace BLL
             return minuter;  //Kanske returna i Loopen och starta timer efter varje return? Borde funka, kanske....
         }
 
-        public void KallaPaAndraPodcastKategori(string podcastNamn, string newKategori) {
+        public void KallaPaAndraPodcastKategori(string podcastNamn, string newKategori)
+        {
             podcastRep.AndraPodcastKategori(podcastNamn, newKategori);
         }
 
         public void KallaPaAndraPodcastFrekvens(string podcastNamn, string newFrekvens)
         {
             podcastRep.AndraPodcastFrekvens(podcastNamn, newFrekvens);
-            
+
         }
 
         public void KallaPaAndraPodcastNamn(string oldPodcastNamn, string newPodcastNamn)
@@ -169,8 +171,9 @@ namespace BLL
             }
         }
 
-        public void DeletePodcastForKategori(int index1, int index2) { 
-            
+        public void DeletePodcastForKategori(int index1, int index2)
+        {
+
         }
 
         public void DeletePoddcastAtUrlCompare(string url)
@@ -187,41 +190,23 @@ namespace BLL
             }
         }
 
-        public void KallaPaDelete(int index) {
+        public void KallaPaDelete(int index)
+        {
             podcastRep.Delete2(index);
         }
 
 
-        public void saveChangesPod() {
+        public void saveChangesPod()
+        {
             podcastRep.SparaAllaAndringar();
         }
 
-        public void AnropaDeleteKatOchPod(string sokNamn) {
+        public void AnropaDeleteKatOchPod(string sokNamn)
+        {
             podcastRep.DeletePodcastEfterKategori(sokNamn);
         }
 
 
 
-        //Exempel på virtual nedanför
-        public override void KontrollerMetod()
-        {
-            Console.WriteLine("Tjabba");
-        }
     }
-
-
-    public class KontrollerKlass
-        {
-
-
-            public KontrollerKlass()
-            {
-
-            }
-
-            public virtual void KontrollerMetod()
-            {
-                Console.WriteLine("hej");
-            }
-        }
     }

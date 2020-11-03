@@ -16,7 +16,7 @@ namespace BLL
             
         }
 
-        public virtual bool ValdFrekvens(string frekvens)
+        public virtual bool ValdFrekvens(string frekvens) //Virtual/Override
         {
 
             bool korrektFrekvens = Int32.TryParse(frekvens, out int frekvensArVald);
